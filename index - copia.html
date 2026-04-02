@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expo Logística y Transporte UPEC 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root{
+      --green-950:#041f11;
+      --green-900:#07341d;
+      --green-800:#0a4a27;
+      --green-700:#006633;
+      --green-600:#0d8a4c;
+      --gold:#f0c040;
+      --gold-soft:#f8d982;
+      --bg:#f4f7f2;
+      --card:#ffffff;
+      --text:#132216;
+      --muted:#6a7c6c;
+      --line:#dde6db;
+      --soft:#f8fbf7;
+      --blue:#1768c6;
+      --purple:#6e2ba6;
+      --danger:#9e3333;
+      --success:#0b8a4a;
+      --shadow:0 20px 48px rgba(0,0,0,.10);
+      --shadow-soft:0 10px 26px rgba(0,0,0,.06);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    h1,h2,h3,h4,h5{font-family:'Syne',sans-serif;line-height:1.04}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    button{font-family:inherit}
+
+    .container{width:min(1320px,calc(100% - 2rem));margin:0 auto}
+    .section{padding:5.5rem 0}
+    .card{background:var(--card);border:1px solid rgba(0,102,51,.08);border-radius:var(--radius);box-shadow:var(--shadow-soft)}
+
+    .eyebrow{display:inline-flex;align-items:center;gap:.55rem;color:var(--green-700);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:.95rem}
+    .eyebrow:before{content:'';width:26px;height:2px;background:var(--green-700);display:inline-block}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+    .section-title{font-size:clamp(2rem,4vw,3.45rem);letter-spacing:-.05em;margin-bottom:.8rem}
+    .section-desc{max-width:900px;color:var(--muted);line-height:1.8;font-size:1rem}
+
+    .btn-primary,.btn-secondary,.btn-outline,.btn-soft,.mini-btn,.chip-btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:.65rem;padding:.92rem 1.3rem;border-radius:14px;font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;border:none;cursor:pointer;transition:.28s ease
+    }
+    .btn-primary{background:var(--gold);color:var(--green-950);box-shadow:0 12px 26px rgba(240,192,64,.26)}
+    .btn-primary:hover{transform:translateY(-2px);background:#ffd96e}
+    .btn-secondary{background:var(--green-700);color:#fff;box-shadow:0 12px 26px rgba(0,102,51,.18)}
+    .btn-secondary:hover{transform:translateY(-2px);background:#015529}
+    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,.24);color:#fff}
+    .btn-outline:hover{background:rgba(255,255,255,.08)}
+    .btn-soft{background:#fff;border:1px solid var(--line);color:var(--green-900)}
+    .btn-soft:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
+    .mini-btn{padding:.72rem 1rem;border-radius:12px;background:var(--green-700);color:#fff;font-size:.84rem}
+    .mini-btn:hover{background:var(--green-900);transform:translateY(-2px)}
+    .chip-btn{padding:.58rem .9rem;border-radius:999px;background:#fff;border:1px solid rgba(0,102,51,.12);color:var(--green-900);font-size:.8rem}
+    .chip-btn.active{background:var(--green-700);color:#fff;border-color:var(--green-700)}
+
+    .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(4,31,17,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(240,192,64,.12);transition:.24s ease}
+    .navbar.scrolled{box-shadow:0 18px 40px rgba(0,0,0,.18)}
+    .nav-inner{width:min(1360px,calc(100% - 1rem));min-height:76px;margin:0 auto;display:flex;align-items:center;gap:1rem}
+    .brand{display:flex;align-items:center;gap:.8rem;color:#fff;flex-shrink:0}
+    .brand img{width:44px;height:44px;object-fit:contain;filter:brightness(0) invert(1)}
+    .brand strong{display:block;color:var(--gold);font-size:1rem}
+    .brand span{display:block;font-size:.72rem;color:rgba(255,255,255,.65)}
+    .nav-links{display:flex;gap:.2rem;align-items:center;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-link{white-space:nowrap;color:rgba(255,255,255,.8);font-size:.82rem;font-weight:700;padding:.55rem .78rem;border-radius:10px;border:1px solid transparent;transition:.24s ease}
+    .nav-link:hover,.nav-link.active{color:var(--gold);background:rgba(240,192,64,.08);border-color:rgba(240,192,64,.16)}
+    .nav-cta{background:var(--gold);color:var(--green-950)!important}
+
+    .hero{position:relative;min-height:100vh;padding-top:90px;background:
+      radial-gradient(circle at 82% 14%, rgba(240,192,64,.18), transparent 18%),
+      radial-gradient(circle at 10% 82%, rgba(13,138,76,.22), transparent 20%),
+      linear-gradient(140deg, #04170e 0%, #07532c 44%, #097a40 100%);overflow:hidden}
+    .hero:before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);background-size:56px 56px;mask-image:radial-gradient(circle at center, black 40%, transparent 82%);pointer-events:none}
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:1.5rem;align-items:center;min-height:calc(100vh - 90px)}
+    .hero-copy{color:#fff;padding:2rem 0 3rem;animation:fadeUp .8s ease both}
+    .hero-copy h1{font-size:clamp(3rem,6vw,5.9rem);letter-spacing:-.06em;line-height:.94;margin:1.15rem 0 1rem}
+    .hero-copy h1 span{display:block;color:var(--gold)}
+    .hero-copy p{max-width:700px;color:rgba(255,255,255,.82);line-height:1.82;font-size:1.05rem}
+    .hero-actions{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:1.7rem}
+    .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.52rem .95rem;border-radius:999px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:.84rem;font-weight:700}
+    .hero-side{display:grid;gap:1rem;padding:2rem 0 3rem}
+    .hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:24px;box-shadow:0 26px 60px rgba(0,0,0,.18);backdrop-filter:blur(14px);padding:1.45rem;color:#fff;animation:fadeUp 1s ease both}
+    .hero-panel h3{font-size:1.08rem;color:var(--gold);margin-bottom:.75rem}
+    .hero-panel p{font-size:.92rem;color:rgba(255,255,255,.76);line-height:1.68}
+    .hero-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.95rem}
+    .hero-stat{padding:1rem;border-radius:18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);animation:floatCard 6s ease-in-out infinite}
+    .hero-stat:nth-child(2){animation-delay:.6s}.hero-stat:nth-child(3){animation-delay:1.2s}.hero-stat:nth-child(4){animation-delay:1.8s}
+    .hero-stat strong{display:block;font-family:'Syne',sans-serif;font-size:1.6rem;color:#fff;margin-bottom:.22rem}
+    .hero-stat span{display:block;color:rgba(255,255,255,.68);font-size:.82rem;line-height:1.45}
+
+    .announcement-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:-2.4rem;position:relative;z-index:5}
+    .ecard{position:relative;overflow:hidden;padding:1.2rem 1.25rem;border-radius:22px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow);transform:translateY(0);transition:.26s ease;animation:fadeUp 1s ease both}
+    .ecard:hover{transform:translateY(-5px)}
+    .ecard:before{content:'';position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shine 4s linear infinite}
+    .ecard-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.7rem}
+    .ecard-icon{width:52px;height:52px;border-radius:16px;background:rgba(0,102,51,.1);color:var(--green-700);display:flex;align-items:center;justify-content:center;font-size:1.25rem}
+    .ecard-badge{padding:.34rem .68rem;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+    .badge-open{background:rgba(0,102,51,.12);color:var(--green-700)}
+    .badge-date{background:rgba(240,192,64,.18);color:#7a5d00}
+    .badge-live{background:rgba(23,104,198,.12);color:var(--blue)}
+    .ecard h3{font-size:1rem;color:var(--green-950);margin-bottom:.45rem}
+    .ecard p{font-size:.88rem;color:var(--muted);line-height:1.65}
+
+    .highlight-start{padding:1.8rem;border-radius:30px;background:linear-gradient(135deg,#082f18 0%, #0b5a30 55%, #0d7d43 100%);color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .highlight-start:before{content:'';position:absolute;inset:auto -60px -80px auto;width:220px;height:220px;border-radius:50%;background:rgba(240,192,64,.16)}
+    .highlight-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:1.2rem;align-items:start}
+    .highlight-copy h2{font-size:clamp(2.1rem,4vw,3.4rem);letter-spacing:-.05em;margin-bottom:.8rem}
+    .highlight-copy p{max-width:740px;color:rgba(255,255,255,.82);line-height:1.8}
+    .highlight-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.2rem}
+    .mot-card,.prize-card,.instrument-card,.contact-card,.jury-card,.result-card{padding:1.45rem;position:relative;overflow:hidden;background:#fff;border:1px solid rgba(0,102,51,.08);border-radius:22px;box-shadow:var(--shadow-soft)}
+    .mot-card:before,.prize-card:before,.instrument-card:before,.jury-card:before,.result-card:before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--green-700),var(--gold))}
+    .mot-card h3,.prize-card h3,.instrument-card h3,.contact-card h3,.jury-card h3,.result-card h3{font-size:1.05rem;color:var(--green-950);margin-bottom:.55rem}
+    .mot-card p,.prize-card p,.instrument-card p,.contact-card p,.jury-card p,.result-card p{font-size:.9rem;color:var(--muted);line-height:1.72}
+    .prize-highlight{display:inline-flex;align-items:center;gap:.4rem;padding:.34rem .62rem;border-radius:999px;background:rgba(240,192,64,.18);color:#7c5d00;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.65rem}
+
+    .status-band{background:linear-gradient(135deg,var(--green-950),#082f18);padding:1.15rem 0;border-top:1px solid rgba(240,192,64,.16);border-bottom:1px solid rgba(240,192,64,.16)}
+    .status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+    .status-item{padding:.9rem;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);text-align:center;color:#fff}
+    .status-item strong{display:block;font-family:'Syne',sans-serif;font-size:1.6rem;color:var(--gold);margin-bottom:.25rem}
+    .status-item span{display:block;font-size:.82rem;color:rgba(255,255,255,.68);line-height:1.45}
+
+    .tabs{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.35rem}
+    .tab-btn{border:1px solid rgba(0,102,51,.12);background:#fff;color:var(--green-950);border-radius:14px;padding:.82rem 1.05rem;font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:.24s ease}
+    .tab-btn.active{background:var(--green-700);color:#fff;border-color:var(--green-700);box-shadow:0 12px 26px rgba(0,102,51,.16)}
+    .tab-panel{display:none}.tab-panel.active{display:block}
+
+    .grid-2{display:grid;grid-template-columns:1.08fr .92fr;gap:1.25rem;align-items:start}
+    .metrics-grid,.cards-4,.resource-grid,.contacts-grid,.result-grid,.jury-grid,.premios-grid{display:grid;gap:1rem}
+    .metrics-grid{grid-template-columns:repeat(4,1fr)}
+    .cards-4{grid-template-columns:repeat(4,1fr)}
+    .resource-grid{grid-template-columns:repeat(3,1fr)}
+    .contacts-grid{grid-template-columns:repeat(3,1fr)}
+    .result-grid{grid-template-columns:repeat(3,1fr)}
+    .jury-grid{grid-template-columns:repeat(2,1fr)}
+    .premios-grid{grid-template-columns:repeat(4,1fr)}
+
+    .block{padding:1.45rem}
+    .block h3{font-size:1.05rem;color:var(--green-950);margin-bottom:.55rem}
+    .block p,.block li{font-size:.9rem;color:var(--muted);line-height:1.72}
+    .check-list{list-style:none;display:grid;gap:.75rem;margin-top:1rem}
+    .check-list li{display:flex;gap:.7rem;align-items:flex-start}.check-list i{color:var(--green-700);margin-top:.18rem}
+    .icon-box{width:56px;height:56px;border-radius:16px;background:rgba(0,102,51,.1);color:var(--green-700);display:flex;align-items:center;justify-content:center;font-size:1.28rem;margin-bottom:.95rem}
+
+    .metric-card{padding:1.15rem;border-radius:18px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft)}
+    .metric-card strong{display:block;font-family:'Syne',sans-serif;font-size:1.95rem;color:var(--green-900);margin-bottom:.25rem}
+    .metric-card span{display:block;color:var(--muted);font-size:.88rem;line-height:1.45}
+    .metric-card small{display:inline-block;margin-top:.7rem;color:var(--green-700);font-size:.76rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+
+    .phase-wrap{display:grid;grid-template-columns:.92fr 1.08fr;gap:1.25rem;align-items:start}
+    .phase-list{display:grid;gap:.9rem}
+    .phase-card{padding:1.15rem;border-radius:18px;background:#fff;border:1px solid rgba(0,102,51,.09);box-shadow:var(--shadow-soft);cursor:pointer;transition:.24s ease}
+    .phase-card.active,.phase-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:rgba(0,102,51,.22)}
+    .phase-top{display:flex;justify-content:space-between;align-items:center;gap:.8rem;margin-bottom:.55rem}
+    .phase-top strong{font-family:'Syne',sans-serif;font-size:1rem;color:var(--green-900)}
+    .phase-state{padding:.36rem .72rem;border-radius:999px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+    .state-ready{background:rgba(0,102,51,.1);color:var(--green-700)}
+    .state-run{background:rgba(240,192,64,.18);color:#8a6500}
+    .state-next{background:rgba(28,102,200,.14);color:#0f57aa}
+    .state-final{background:rgba(112,51,167,.15);color:#6e2ba6}
+    .trace-card{padding:1.55rem}
+    .trace-card h3{font-size:1.22rem;color:var(--green-700);margin-bottom:.55rem}
+    .trace-card p{font-size:.95rem;color:var(--muted);line-height:1.75;margin-bottom:.9rem}
+    .trace-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin:1rem 0 1.2rem}
+    .trace-grid div{padding:.95rem;border-radius:16px;background:var(--soft);border:1px solid var(--line)}
+    .trace-grid strong{display:block;font-size:.8rem;color:var(--green-700);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem}
+    .trace-grid span{display:block;font-size:.92rem;color:var(--text);line-height:1.45}
+    .progress-wrap{display:grid;gap:.95rem;margin-top:.9rem}
+    .progress-item strong{display:flex;justify-content:space-between;gap:1rem;font-size:.88rem;color:var(--green-950);margin-bottom:.38rem}
+    .progress-bar{width:100%;height:10px;border-radius:999px;background:#edf3eb;overflow:hidden}
+    .progress-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green-700),var(--green-600))}
+
+    .timeline-title-box,.agenda-title-box{margin-bottom:1.3rem;padding:1.45rem;border-radius:24px;background:linear-gradient(135deg,#fff, #f8fbf7);border:1px solid var(--line);box-shadow:var(--shadow-soft)}
+    .timeline-title-box h3,.agenda-title-box h3{font-size:1.55rem;color:var(--green-950);margin-bottom:.45rem}
+    .timeline-title-box p,.agenda-title-box p{font-size:.94rem;color:var(--muted);line-height:1.68}
+
+    .milestone-wrap{display:grid;gap:1rem}
+    .milestone-row{display:grid;grid-template-columns:170px 1fr 180px;gap:1rem;align-items:stretch;padding:1.15rem;border-radius:24px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
+    .milestone-row:before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--green-700),var(--gold))}
+    .milestone-date{padding:1rem;border-radius:18px;background:linear-gradient(135deg,#eaf6ee,#f7fbf8);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+    .milestone-date strong{font-family:'Syne',sans-serif;font-size:1.55rem;color:var(--green-900);margin-bottom:.3rem}
+    .milestone-date span{font-size:.82rem;color:var(--green-700);font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+    .milestone-main{display:grid;gap:.7rem}
+    .milestone-head{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap}
+    .milestone-head h4{font-size:1.06rem;color:var(--green-950)}
+    .milestone-head p{font-size:.88rem;color:var(--muted);line-height:1.62;max-width:780px}
+    .milestone-status{padding:.34rem .7rem;border-radius:999px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+    .ms-done{background:rgba(0,102,51,.12);color:var(--green-700)}
+    .ms-current{background:rgba(240,192,64,.18);color:#7a5d00}
+    .ms-next{background:rgba(23,104,198,.12);color:var(--blue)}
+    .milestone-points{display:flex;flex-wrap:wrap;gap:.55rem}
+    .point-chip{display:inline-flex;align-items:center;gap:.45rem;padding:.38rem .72rem;border-radius:999px;background:var(--soft);border:1px solid var(--line);font-size:.76rem;font-weight:800;color:var(--green-900)}
+    .point-chip.important{background:rgba(240,192,64,.16);border-color:rgba(240,192,64,.35);color:#7a5d00}
+    .milestone-side{display:flex;align-items:center;justify-content:center}
+    .milestone-side .icon-shell{width:78px;height:78px;border-radius:24px;background:rgba(0,102,51,.09);color:var(--green-700);display:flex;align-items:center;justify-content:center;font-size:1.7rem}
+
+    .agenda-flow{padding:1.5rem;border-radius:28px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .agenda-flow:before{content:'';position:absolute;left:72px;top:120px;bottom:48px;width:3px;background:linear-gradient(180deg,var(--green-700),rgba(0,102,51,.1))}
+    .agenda-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.2rem}
+    .agenda-summary-card{padding:1rem;border-radius:18px;background:linear-gradient(135deg,#eef8f2,#f9fcfa);border:1px solid var(--line)}
+    .agenda-summary-card strong{display:block;font-family:'Syne',sans-serif;font-size:1.15rem;color:var(--green-900);margin-bottom:.2rem}
+    .agenda-summary-card span{display:block;font-size:.82rem;color:var(--muted);line-height:1.5}
+    .agenda-list{display:grid;gap:1rem}
+    .agenda-row{display:grid;grid-template-columns:120px 90px 1fr;gap:1rem;align-items:start}
+    .agenda-time{padding-top:.5rem;font-family:'Syne',sans-serif;font-size:.95rem;color:var(--green-900)}
+    .agenda-marker{display:flex;justify-content:center;position:relative}
+    .agenda-bubble{width:62px;height:62px;border-radius:18px;background:#fff;border:1px solid rgba(0,102,51,.15);box-shadow:var(--shadow-soft);display:flex;align-items:center;justify-content:center;color:var(--green-700);font-size:1.25rem;z-index:2}
+    .agenda-card-full{padding:1rem 1.05rem;border-radius:18px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft)}
+    .agenda-card-full h4{font-size:1rem;color:var(--green-950);margin-bottom:.25rem}
+    .agenda-card-full p{font-size:.88rem;color:var(--muted);line-height:1.66}
+    .agenda-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.75rem}
+    .agenda-tags span{display:inline-flex;align-items:center;gap:.35rem;padding:.32rem .62rem;border-radius:999px;background:rgba(0,102,51,.08);color:var(--green-700);font-size:.72rem;font-weight:800}
+
+    .search-bar{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+    .search-input{flex:1;min-width:260px;padding:.95rem 1rem;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--text);font-size:.92rem;outline:none}
+    .challenge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1rem;align-items:stretch}
+    .group-tabs,.final-tabs,.case-tabs{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1rem}
+
+    .challenge-card{display:flex;flex-direction:column;height:100%;min-height:100%;padding:1.3rem;border-radius:22px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
+    .challenge-card:before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--green-700),var(--gold))}
+    .challenge-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:.75rem}
+    .challenge-code{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .65rem;border-radius:999px;background:rgba(0,102,51,.08);color:var(--green-700);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+    .availability{padding:.35rem .65rem;border-radius:999px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+    .availability.off{background:rgba(158,51,51,.1);color:var(--danger)}
+    .availability.on{background:rgba(0,102,51,.1);color:var(--success)}
+    .challenge-card h3{font-size:1.05rem;color:var(--green-950);margin-bottom:.55rem;min-height:3.1em}
+    .challenge-card > p{font-size:.88rem;color:var(--muted);line-height:1.68;margin-bottom:.8rem}
+    .challenge-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;margin:.2rem 0 .9rem}
+    .challenge-meta div{padding:.8rem;border-radius:14px;background:var(--soft);border:1px solid var(--line)}
+    .challenge-meta strong{display:block;font-size:.75rem;color:var(--green-700);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.25rem}
+    .challenge-meta span{display:block;font-size:.86rem;color:var(--text);line-height:1.45}
+    .challenge-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:auto;padding-top:.3rem}
+    .challenge-tags span{display:inline-flex;align-items:center;gap:.35rem;padding:.34rem .65rem;border-radius:999px;background:rgba(0,102,51,.08);color:var(--green-700);font-size:.72rem;font-weight:800;letter-spacing:.03em}
+    .challenge-actions{margin-top:1rem}
+
+    .jury-meta,.winner-meta{display:grid;gap:.45rem;margin-top:.95rem}
+    .jury-meta span,.winner-meta span{font-size:.82rem;color:var(--muted);line-height:1.5}
+    .jury-meta strong,.winner-meta strong{color:var(--green-700)}
+    .instrument-card a,.instrument-card button,.contact-card a{margin-top:1rem}
+
+    .table-wrap{overflow:auto;border-radius:18px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-soft)}
+    table{width:100%;border-collapse:collapse;min-width:760px}
+    th,td{padding:.9rem 1rem;text-align:left;border-bottom:1px solid var(--line);font-size:.88rem;line-height:1.5}
+    th{background:#f8faf7;color:var(--green-900);font-family:'Syne',sans-serif;font-size:.86rem}
+    tr:hover td{background:#fbfcfa}
+    .table-tag{display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .58rem;border-radius:999px;background:rgba(0,102,51,.08);color:var(--green-700);font-size:.72rem;font-weight:800;letter-spacing:.04em}
+
+    .winner-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+    .winner-card{padding:1.45rem;border-radius:22px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
+    .winner-card:before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--gold),#ffd96f)}
+    .rank{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .68rem;border-radius:999px;background:rgba(240,192,64,.16);color:#7c5d00;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.8rem}
+    .winner-card h3{font-size:1rem;color:var(--green-950);margin-bottom:.45rem}
+    .winner-card p{font-size:.88rem;color:var(--muted);line-height:1.62}
+
+    .gallery-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:1rem}
+    .video-box iframe{width:100%;min-height:450px;border:none;border-radius:22px}
+    .photo-stack{display:grid;gap:1rem;grid-template-rows:repeat(3,1fr)}
+    .photo-card{position:relative;border-radius:22px;overflow:hidden;min-height:140px;box-shadow:var(--shadow-soft)}
+    .photo-card img{width:100%;height:100%;object-fit:cover}
+    .photo-overlay{position:absolute;inset:auto 0 0 0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.78));padding:1rem;color:#fff}
+    .photo-overlay strong{display:block;margin-bottom:.18rem}
+    .photo-overlay span{display:block;font-size:.84rem;line-height:1.45;color:rgba(255,255,255,.78)}
+
+    .footer{background:#06150c;color:rgba(255,255,255,.66);padding:2.7rem 0;border-top:1px solid rgba(255,255,255,.08)}
+    .footer strong{color:var(--gold)}
+    .back-top{position:fixed;right:1.1rem;bottom:1.1rem;width:48px;height:48px;border-radius:50%;border:none;background:var(--green-700);color:#fff;cursor:pointer;box-shadow:0 12px 24px rgba(0,102,51,.25);opacity:0;pointer-events:none;transition:.24s ease;z-index:990}
+    .back-top.show{opacity:1;pointer-events:auto}
+
+    .modal{position:fixed;inset:0;background:rgba(4,18,10,.68);display:none;align-items:center;justify-content:center;z-index:1200;padding:1.2rem}
+    .modal.open{display:flex}
+    .modal-box{width:min(960px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 34px 70px rgba(0,0,0,.28);padding:1.55rem;position:relative}
+    .modal-close{position:sticky;top:0;margin-left:auto;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#f2f5f1;color:var(--green-950);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3}
+    .modal-content h3{font-size:1.7rem;color:var(--green-950);margin:.65rem 0 .85rem}
+    .modal-content p,.modal-content li{font-size:.97rem;color:var(--muted);line-height:1.78}
+    .modal-content ul{padding-left:1.1rem;display:grid;gap:.45rem;margin-top:.6rem}
+    .modal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin-top:1rem}
+    .modal-grid div{padding:1rem;border-radius:16px;background:var(--soft);border:1px solid var(--line)}
+    .modal-grid strong{display:block;font-size:.78rem;color:var(--green-700);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem}
+    .modal-grid span{display:block;font-size:.92rem;color:var(--text);line-height:1.45}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes shine{0%{transform:translateX(-120%)}45%,100%{transform:translateX(140%)}}
+    @keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+    @media (max-width:1180px){
+      .hero-grid,.grid-2,.phase-wrap,.gallery-grid,.highlight-grid{grid-template-columns:1fr}
+      .announcement-grid,.metrics-grid,.cards-4,.resource-grid,.contacts-grid,.result-grid,.premios-grid,.winner-grid,.highlight-mini,.agenda-summary{grid-template-columns:1fr 1fr}
+      .jury-grid{grid-template-columns:1fr}
+      .milestone-row{grid-template-columns:150px 1fr}
+      .milestone-side{display:none}
+    }
+    @media (max-width:900px){
+      .agenda-flow:before{display:none}
+      .agenda-row{grid-template-columns:1fr}
+      .agenda-marker{justify-content:flex-start}
+      .agenda-bubble{width:54px;height:54px}
+    }
+    @media (max-width:860px){
+      .nav-inner{width:calc(100% - .7rem)}
+      .brand span{display:none}
+      .nav-link{font-size:.76rem;padding:.5rem .65rem}
+      .nav-link span{display:none}
+      .nav-cta{display:none}
+      .status-grid,.announcement-grid,.metrics-grid,.cards-4,.resource-grid,.contacts-grid,.result-grid,.hero-stat-grid,.trace-grid,.modal-grid,.challenge-meta,.winner-grid,.challenge-grid,.highlight-mini,.agenda-summary,.premios-grid{grid-template-columns:1fr}
+      .milestone-row{grid-template-columns:1fr}
+      .table-wrap table{min-width:620px}
+    }
+    @media (max-width:640px){
+      .container{width:min(1320px,calc(100% - 1.2rem))}
+      .section{padding:4rem 0}
+      .hero-copy h1{font-size:2.8rem}
+      .hero-copy p{font-size:.98rem}
+      .video-box iframe{min-height:280px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#inicio" class="brand">
+        <img src="https://upec.edu.ec/wp-content/uploads/elementor/thumbs/Logo_Principal-ralkdxwwqpf92usicbhhmi8nhirkosn4z9l4t7nyda.png" alt="UPEC">
+        <div>
+          <strong>Expo Logística 2026</strong>
+          <span>UPEC · Carrera de Logística y Transporte</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="#evento"><i class="fas fa-circle-info"></i><span>Evento</span></a>
+        <a class="nav-link" href="#participa"><i class="fas fa-gift"></i><span>Participa</span></a>
+        <a class="nav-link" href="#cronograma-general"><i class="fas fa-calendar-days"></i><span>Ruta general</span></a>
+        <a class="nav-link" href="#agenda-final"><i class="fas fa-stopwatch"></i><span>Agenda final</span></a>
+        <a class="nav-link" href="#retos"><i class="fas fa-folder-open"></i><span>Retos</span></a>
+        <a class="nav-link" href="#recursos"><i class="fas fa-link"></i><span>Recursos</span></a>
+        <a class="nav-link" href="#consolidado"><i class="fas fa-users"></i><span>Consolidado</span></a>
+        <a class="nav-link" href="#finalistas"><i class="fas fa-ranking-star"></i><span>Finalistas</span></a>
+        <a class="nav-link" href="#ganadores"><i class="fas fa-trophy"></i><span>Ganadores</span></a>
+        <a class="nav-link" href="#jurados"><i class="fas fa-users-gear"></i><span>Jurados</span></a>
+        <a class="nav-link nav-cta" href="#recursos"><i class="fas fa-rocket"></i>Acceder</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="inicio">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="pill"><i class="fas fa-calendar-star"></i> Lunes 20 de abril de 2026 · Evento final oficial · UPEC, Tulcán</span>
+        <h1>Expo Logística <span>y Transporte UPEC 2026</span></h1>
+        <p>
+          Hackathon académico y expoferia institucional para el desarrollo, presentación y evaluación de soluciones logísticas, propuestas de valor y trabajos académicos aplicados. El evento articula aprendizaje práctico, tecnologías 4.0, evaluación estructurada, posters académicos y memoria institucional.
+        </p>
+        <div class="hero-actions">
+          <a href="#participa" class="btn-primary"><i class="fas fa-gift"></i>Participar y ganar</a>
+          <a href="#retos" class="btn-secondary"><i class="fas fa-puzzle-piece"></i>Ver retos</a>
+          <a href="#agenda-final" class="btn-outline"><i class="fas fa-stopwatch"></i>Agenda del 20 de abril</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="hero-panel">
+          <h3>Propósito estratégico</h3>
+          <p>
+            Consolidar la Expoferia como un hito académico e institucional de la Carrera de Logística y Transporte, orientado al desarrollo de soluciones logísticas, innovación aplicada, visibilidad estudiantil y proyección anual del programa.
+          </p>
+        </div>
+        <div class="hero-stat-grid">
+          <div class="hero-stat"><strong>40</strong><span>Equipos registrados en hackathon: 20 Junior y 20 Senior.</span></div>
+          <div class="hero-stat"><strong>20</strong><span>Posters académicos registrados para noveno semestre.</span></div>
+          <div class="hero-stat"><strong>20</strong><span>Finalistas seleccionados: 10 Junior y 10 Senior.</span></div>
+          <div class="hero-stat"><strong>10</strong><span>Jurados distribuidos entre hackathon y posters académicos.</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="container announcement-grid" aria-label="Tarjetas informativas del evento">
+    <article class="ecard">
+      <div class="ecard-top"><div class="ecard-icon"><i class="fas fa-bullhorn"></i></div><span class="ecard-badge badge-open">Convocatoria</span></div>
+      <h3>Registro institucional habilitado</h3>
+      <p>El evento dispone de formulario oficial para grupos del hackathon y línea de registro para proyectos y materiales de entrega.</p>
+    </article>
+    <article class="ecard">
+      <div class="ecard-top"><div class="ecard-icon"><i class="fas fa-diagram-project"></i></div><span class="ecard-badge badge-date">Retos por categoría</span></div>
+      <h3>Banco de retos estructurado</h3>
+      <p>Los estudiantes pueden revisar los retos completos por categoría, filtrarlos y consultar si están disponibles o no disponibles.</p>
+    </article>
+    <article class="ecard">
+      <div class="ecard-top"><div class="ecard-icon"><i class="fas fa-trophy"></i></div><span class="ecard-badge badge-live">Resultados</span></div>
+      <h3>Publicación secuencial de resultados</h3>
+      <p>El sitio integra consolidado de grupos, finalistas por categoría, ganadores oficiales y reconocimientos institucionales.</p>
+    </article>
+  </section>
+
+  <section class="section" id="participa">
+    <div class="container">
+      <div class="highlight-start">
+        <div class="highlight-grid">
+          <div class="highlight-copy">
+            <div class="eyebrow" style="color:var(--gold);">Participa en la Expoferia</div>
+            <h2>¿Por qué vale la pena participar y qué pueden ganar?</h2>
+            <p>
+              La Expoferia es una experiencia de alto valor para los estudiantes porque combina práctica, exposición pública, argumentación técnica, trabajo colaborativo y visibilidad institucional. Participar significa resolver retos reales, presentar soluciones con tecnologías aplicadas y aspirar a reconocimientos académicos y premios especiales.
+            </p>
+            <div class="hero-actions" style="margin-top:1.2rem;">
+              <a href="#retos" class="btn-primary"><i class="fas fa-folder-open"></i>Explorar retos</a>
+              <a href="#reconocimientos" class="btn-outline"><i class="fas fa-award"></i>Ver reconocimientos</a>
+            </div>
+          </div>
+          <div class="highlight-mini">
+            <article class="mot-card">
+              <div class="icon-box"><i class="fas fa-lightbulb"></i></div>
+              <h3>Aprendizaje aplicado</h3>
+              <p>Permite resolver problemas logísticos reales o simulados con herramientas, metodología, indicadores y evidencia concreta.</p>
+            </article>
+            <article class="mot-card">
+              <div class="icon-box"><i class="fas fa-user-tie"></i></div>
+              <h3>Proyección profesional</h3>
+              <p>Fortalece la defensa técnica, la exposición oral, el trabajo en equipo y la construcción del portafolio profesional.</p>
+            </article>
+            <article class="mot-card">
+              <div class="icon-box"><i class="fas fa-microchip"></i></div>
+              <h3>Tecnologías 4.0</h3>
+              <p>Impulsa integración de Power BI, analítica, simulación, IoT, GIS, IA y otras herramientas de apoyo a la decisión.</p>
+            </article>
+            <article class="mot-card">
+              <div class="icon-box"><i class="fas fa-building-columns"></i></div>
+              <h3>Visibilidad institucional</h3>
+              <p>Los mejores proyectos quedan publicados en el portal del evento y en la memoria institucional de la carrera.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:2.3rem;">
+        <div>
+          <div class="eyebrow">Grandes premios</div>
+          <h2 class="section-title">Premios y beneficios para los ganadores</h2>
+          <p class="section-desc">Los reconocimientos del evento combinan valor académico, visibilidad institucional, premios especiales y diferenciación por modalidad, incluyendo un reconocimiento específico para posters académicos.</p>
+        </div>
+      </div>
+
+      <div class="premios-grid">
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-trophy"></i>Premio institucional</span><div class="icon-box"><i class="fas fa-award"></i></div><h3>Reconocimiento oficial</h3><p>Entrega pública de reconocimientos a ganadores de Junior, Senior y posters, con visibilidad ante autoridades, docentes y compañeros.</p></article>
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-certificate"></i>Valor académico</span><div class="icon-box"><i class="fas fa-certificate"></i></div><h3>Certificados y constancias</h3><p>Certificados de participación, finalista y ganador para fortalecer hoja de vida, portafolio académico y soporte de actividades destacadas.</p></article>
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-gift"></i>Premio especial</span><div class="icon-box"><i class="fas fa-laptop"></i></div><h3>Souvenirs y premios tecnológicos</h3><p>Souvenirs institucionales, kits tecnológicos o premios especiales definidos por la organización como incentivo adicional para los equipos ganadores.</p></article>
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-camera"></i>Visibilidad</span><div class="icon-box"><i class="fas fa-photo-film"></i></div><h3>Difusión y memoria visual</h3><p>Publicación de equipos y proyectos destacados en la página oficial, galería, piezas de difusión y materiales institucionales de la carrera.</p></article>
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-scroll"></i>Poster destacado</span><div class="icon-box"><i class="fas fa-scroll"></i></div><h3>Premio especial para posters</h3><p>Reconocimiento específico para el mejor poster académico, con protagonismo en la premiación y visibilidad diferenciada dentro del portal del evento.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="status-band">
+    <div class="container status-grid">
+      <div class="status-item"><strong>7</strong><span>Fases metodológicas desde preparación hasta clausura.</span></div>
+      <div class="status-item"><strong>3</strong><span>Entregables principales del hackathon: documento, evidencia y pitch.</span></div>
+      <div class="status-item"><strong>60</strong><span>Registros totales entre equipos del hackathon y posters.</span></div>
+      <div class="status-item"><strong>5</strong><span>Reconocimientos oficiales previstos en premiación.</span></div>
+      <div class="status-item"><strong>95.33</strong><span>Puntaje más alto registrado en la premiación final.</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="evento">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Evento institucional</div>
+          <h2 class="section-title">Plataforma académica de innovación logística</h2>
+          <p class="section-desc">
+            La Expo Logística y Transporte UPEC 2026 se desarrolla bajo modalidad híbrida de expoferia, hackathon académico y posters académicos. Su finalidad es promover soluciones logísticas innovadoras, técnicamente fundamentadas y orientadas a la resolución de casos reales o simulados mediante trabajo colaborativo, integración tecnológica y evaluación transparente.
+          </p>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="visionPanel">Visión del evento</button>
+        <button class="tab-btn" data-tab="objetivosPanel">Objetivos y alcance</button>
+        <button class="tab-btn" data-tab="tecnologiasPanel">Tecnologías integradas</button>
+      </div>
+
+      <div class="tab-panel active" id="visionPanel">
+        <div class="grid-2">
+          <article class="card block">
+            <h3>Carácter académico y estratégico</h3>
+            <p>
+              La Expoferia combina análisis de problemas, diseño de soluciones, producción de entregables, defensa técnica y evaluación comparativa. A nivel institucional, fortalece la visibilidad de la carrera, evidencia el uso de laboratorios y proyecta a la carrera como espacio activo de innovación logística aplicada.
+            </p>
+            <ul class="check-list">
+              <li><i class="fas fa-check-circle"></i><span>Formación práctica basada en resolución de casos logísticos estructurados.</span></li>
+              <li><i class="fas fa-check-circle"></i><span>Trabajo colaborativo con soporte metodológico y tecnológico.</span></li>
+              <li><i class="fas fa-check-circle"></i><span>Producción de documentos, pitch, prototipos, dashboards y evidencia técnica.</span></li>
+            </ul>
+          </article>
+          <article class="card block">
+            <h3>Propósito de largo plazo</h3>
+            <p>
+              El evento se proyecta como base de un proceso anual que puede crecer en alcance, calidad, integración tecnológica y participación. La página consolida esa lógica para dejar evidencia institucional y memoria académica de cada edición.
+            </p>
+            <ul class="check-list">
+              <li><i class="fas fa-arrow-right"></i><span>Visibilizar talento estudiantil.</span></li>
+              <li><i class="fas fa-arrow-right"></i><span>Fortalecer identidad académica y tecnológica del programa.</span></li>
+              <li><i class="fas fa-arrow-right"></i><span>Proyectar soluciones logísticas contextualizadas.</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="objetivosPanel">
+        <div class="grid-2">
+          <article class="card block">
+            <h3>Objetivo general</h3>
+            <p>
+              Organizar y ejecutar la Expoferia Logística y Transporte UPEC 2026 bajo modalidad hackathon académico, con el fin de promover el desarrollo de soluciones logísticas innovadoras, técnicamente fundamentadas y orientadas a la resolución de casos reales o simulados.
+            </p>
+          </article>
+          <article class="card block">
+            <h3>Alcance del evento</h3>
+            <p>
+              Incluye participación de estudiantes de segundo a octavo semestre en hackathon, noveno semestre en posters, conformación de equipos, asignación de casos, entregables, evaluación preliminar, selección de finalistas, exposición final y premiación oficial.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tecnologiasPanel">
+        <div class="metrics-grid">
+          <article class="metric-card"><strong>IA</strong><span>Analítica predictiva, apoyo a decisión y procesamiento avanzado de datos.</span><small>Tecnología 4.0</small></article>
+          <article class="metric-card"><strong>Power BI</strong><span>Dashboards, KPIs y tableros de control para seguimiento logístico.</span><small>Visualización</small></article>
+          <article class="metric-card"><strong>Simulación</strong><span>Modelado de procesos, cuellos de botella y escenarios operativos.</span><small>Procesos</small></article>
+          <article class="metric-card"><strong>IoT / GIS / RV</strong><span>Sensores, trazabilidad, geolocalización y visualización inmersiva.</span><small>Integración</small></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="trazabilidad" style="background:#fbfcfa;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Trazabilidad</div>
+          <h2 class="section-title">Seguimiento por fases del evento</h2>
+          <p class="section-desc">
+            El evento se desarrolla como proceso académico secuenciado. Este bloque muestra el estado de las fases, sus entregables y el tipo de control que la organización realiza mediante registro de participantes, checklist, control de entregables, asignación de jurados, consolidado y actas.
+          </p>
+        </div>
+      </div>
+
+      <div class="phase-wrap">
+        <div class="phase-list" id="phaseList">
+          <article class="phase-card active" data-phase="preparacion">
+            <div class="phase-top"><strong>Fase 0 · Preparación</strong><span class="phase-state state-ready">Verificada</span></div>
+            <p>Banco de casos, reglamento, rúbricas, plantillas, formularios, comités y estructura operativa.</p>
+          </article>
+          <article class="phase-card" data-phase="lanzamiento">
+            <div class="phase-top"><strong>Fase 1 · Lanzamiento</strong><span class="phase-state state-run">Publicada</span></div>
+            <p>Difusión oficial del evento, socialización de reglas, cronograma y categorías.</p>
+          </article>
+          <article class="phase-card" data-phase="desarrollo">
+            <div class="phase-top"><strong>Fases 2–4 · Desarrollo</strong><span class="phase-state state-next">Control</span></div>
+            <p>Jornada intensiva, desarrollo del proyecto, video pitch y evaluación preliminar.</p>
+          </article>
+          <article class="phase-card" data-phase="final">
+            <div class="phase-top"><strong>Fases 5–7 · Final</strong><span class="phase-state state-final">Cierre</span></div>
+            <p>Mejora de finalistas, expoferia final, deliberación, premiación y clausura.</p>
+          </article>
+        </div>
+        <div class="card trace-card"><div id="phaseContent"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="modalidades">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Modalidades e instrumentos</div>
+          <h2 class="section-title">Participación, entregables y criterios</h2>
+          <p class="section-desc">
+            Los módulos resumen la naturaleza del evento, las categorías, los entregables, el sistema de evaluación y la estructura de control académico utilizada durante todo el proceso.
+          </p>
+        </div>
+      </div>
+
+      <div class="cards-4">
+        <article class="instrument-card card" data-modal="naturaleza"><div class="icon-box"><i class="fas fa-bullseye"></i></div><h3>Naturaleza del evento</h3><p>Carácter académico, estratégico y proyección anual de la Expoferia.</p></article>
+        <article class="instrument-card card" data-modal="categorias"><div class="icon-box"><i class="fas fa-people-group"></i></div><h3>Categorías y participación</h3><p>Junior, Senior y Posters académicos con organización diferenciada.</p></article>
+        <article class="instrument-card card" data-modal="entregables"><div class="icon-box"><i class="fas fa-file-circle-check"></i></div><h3>Entregables obligatorios</h3><p>Documento escrito, video pitch, evidencia técnica y defensa final.</p></article>
+        <article class="instrument-card card" data-modal="evaluacion"><div class="icon-box"><i class="fas fa-scale-balanced"></i></div><h3>Sistema de evaluación</h3><p>Ponderaciones, rúbricas oficiales y escala uniforme de calificación.</p></article>
+        <article class="instrument-card card" data-modal="posters"><div class="icon-box"><i class="fas fa-scroll"></i></div><h3>Posters académicos</h3><p>Exposición breve, evaluación independiente y reconocimiento oficial.</p></article>
+        <article class="instrument-card card" data-modal="pitch"><div class="icon-box"><i class="fas fa-person-chalkboard"></i></div><h3>Pitch final y demo day</h3><p>Tiempo por equipo, estructura sugerida y demostración integrada.</p></article>
+        <article class="instrument-card card" data-modal="checklist"><div class="icon-box"><i class="fas fa-list-check"></i></div><h3>Checklist por fases</h3><p>Control secuencial del cumplimiento de inscripción, casos, entregas y asistencia.</p></article>
+        <article class="instrument-card card" data-modal="escala"><div class="icon-box"><i class="fas fa-ruler-combined"></i></div><h3>Escala oficial</h3><p>Niveles Excelente, Bueno, Básico, Insuficiente y No evidencia.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cronograma-general" style="background:#fbfcfa;">
+    <div class="container">
+      <div class="timeline-title-box">
+        <div class="eyebrow">Ruta general</div>
+        <h3>Ruta general y fechas clave del evento</h3>
+        <p>Se resaltan los momentos más importantes del proceso: preparación, convocatoria, hackathon, entregas, mejora de finalistas y expoferia final. La idea es que cualquier usuario identifique rápidamente qué debe ejecutarse y en qué fechas se realizan actividades o entregas decisivas.</p>
+      </div>
+      <div class="milestone-wrap" id="milestoneGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="agenda-final">
+    <div class="container">
+      <div class="agenda-title-box">
+        <div class="eyebrow">Agenda principal</div>
+        <h3>Agenda oficial · Lunes 20 de Abril de 2026 — Expoferia Final</h3>
+        <p>Esta es la agenda central de consulta para participantes, jurados, comités, docentes y visitantes. La jornada se presenta como un solo flujo continuo para facilitar lectura rápida y ordenada desde el montaje inicial hasta la premiación y clausura.</p>
+      </div>
+      <div class="agenda-flow">
+        <div class="agenda-summary">
+          <article class="agenda-summary-card"><strong>07:00</strong><span>Inicio de montaje y preparación técnica.</span></article>
+          <article class="agenda-summary-card"><strong>08:15</strong><span>Apertura institucional y pautas generales.</span></article>
+          <article class="agenda-summary-card"><strong>09:30</strong><span>Inicio de evaluación de hackathon y posters.</span></article>
+          <article class="agenda-summary-card"><strong>12:40</strong><span>Premiación y cierre institucional.</span></article>
+        </div>
+        <div class="agenda-list" id="agendaBoard"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="retos">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Banco de retos</div>
+          <h2 class="section-title">Retos completos por categoría y disponibilidad</h2>
+          <p class="section-desc">
+            Cada tarjeta presenta el reto con estructura más estable y homogénea. El estudiante puede leer el resumen, ver el estado del reto, identificar la solución referencial y abrir el detalle completo para revisar objetivo, docente de referencia, entregables y tecnologías sugeridas.
+          </p>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <div class="case-tabs">
+          <button class="chip-btn active" data-casecat="Junior">Junior</button>
+          <button class="chip-btn" data-casecat="Senior">Senior</button>
+        </div>
+        <div class="case-tabs">
+          <button class="chip-btn active" data-casefilter="Todos">Todos</button>
+          <button class="chip-btn" data-casefilter="Disponible">Disponibles</button>
+          <button class="chip-btn" data-casefilter="No disponible">No disponibles</button>
+        </div>
+        <input id="challengeSearch" class="search-input" placeholder="Buscar por código, nombre del reto, solución o tutor...">
+      </div>
+
+      <div class="challenge-grid" id="challengeGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="recursos" style="background:linear-gradient(135deg,var(--green-950),#082f18);">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow" style="color:var(--gold);">Registros e instrumentos</div>
+          <h2 class="section-title" style="color:#fff;">Formularios y rúbricas del evento</h2>
+          <p class="section-desc" style="color:rgba(255,255,255,.72);">
+            Este bloque concentra los registros oficiales del evento y las tres rúbricas clave del proceso: evaluación preliminar, evaluación final del hackathon y evaluación de posters académicos.
+          </p>
+        </div>
+      </div>
+
+      <div class="resource-grid">
+        <article class="instrument-card card">
+          <div class="icon-box"><i class="fas fa-users"></i></div>
+          <h3>Registro Grupos Expoferia</h3>
+          <p>Formulario oficial para inscripción de equipos participantes del hackathon.</p>
+          <a href="https://forms.cloud.microsoft/r/BQDgAvjSZb" target="_blank" rel="noopener noreferrer" class="mini-btn"><i class="fas fa-arrow-up-right-from-square"></i>Abrir formulario</a>
+        </article>
+        <article class="instrument-card card">
+          <div class="icon-box"><i class="fas fa-diagram-project"></i></div>
+          <h3>Registro Proyectos</h3>
+          <p>Formulario para recepción de documento preliminar, materiales finales y evidencia técnica.</p>
+          <a href="https://forms.cloud.microsoft/r/JxDv9eKUqA" target="_blank" rel="noopener noreferrer" class="mini-btn"><i class="fas fa-arrow-up-right-from-square"></i>Registrar proyecto</a>
+        </article>
+        <article class="instrument-card card">
+          <div class="icon-box"><i class="fas fa-clipboard-check"></i></div>
+          <h3>Rúbrica Evaluación Expoferia</h3>
+          <p>Formulario de evaluación de proyectos y presentaciones del evento final.</p>
+          <a href="https://forms.cloud.microsoft/r/iiCvrwuUu6" target="_blank" rel="noopener noreferrer" class="mini-btn"><i class="fas fa-arrow-up-right-from-square"></i>Aplicar rúbrica</a>
+        </article>
+        <article class="instrument-card card" data-modal="rubricaPreliminar">
+          <div class="icon-box"><i class="fas fa-filter-circle-dollar"></i></div>
+          <h3>Rúbrica preliminar</h3>
+          <p>Selección de finalistas mediante comprensión del problema, video pitch y viabilidad preliminar.</p>
+          <button class="mini-btn"><i class="fas fa-eye"></i>Consultar criterios</button>
+        </article>
+        <article class="instrument-card card" data-modal="rubricaFinal">
+          <div class="icon-box"><i class="fas fa-file-signature"></i></div>
+          <h3>Rúbrica final del hackathon</h3>
+          <p>Documento técnico, propuesta, innovación, presentación y defensa ante jurados.</p>
+          <button class="mini-btn"><i class="fas fa-eye"></i>Consultar criterios</button>
+        </article>
+        <article class="instrument-card card" data-modal="rubricaPosters">
+          <div class="icon-box"><i class="fas fa-scroll"></i></div>
+          <h3>Rúbrica de posters</h3>
+          <p>Claridad temática, calidad técnica, metodología, aporte, diseño visual y exposición oral.</p>
+          <button class="mini-btn"><i class="fas fa-eye"></i>Consultar criterios</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="consolidado" style="background:#fbfcfa;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Resultados · Etapa 1</div>
+          <h2 class="section-title">Consolidado general de grupos participantes</h2>
+          <p class="section-desc">
+            Publicación del consolidado de grupos y participantes registrados por categoría, siguiendo la estructura general de la matriz del evento y la lógica de organización usada en la evaluación.
+          </p>
+        </div>
+      </div>
+
+      <div class="metrics-grid" style="margin-bottom:1rem;">
+        <article class="metric-card"><strong>20</strong><span>Grupos Junior participantes.</span><small>Categoría Junior</small></article>
+        <article class="metric-card"><strong>20</strong><span>Grupos Senior participantes.</span><small>Categoría Senior</small></article>
+        <article class="metric-card"><strong>20</strong><span>Posters académicos registrados.</span><small>Noveno semestre</small></article>
+        <article class="metric-card"><strong>60</strong><span>Participaciones consolidadas en la matriz general.</span><small>Total registro</small></article>
+      </div>
+
+      <div class="group-tabs">
+        <button class="chip-btn active" data-groupcat="Junior">Junior</button>
+        <button class="chip-btn" data-groupcat="Senior">Senior</button>
+        <button class="chip-btn" data-groupcat="Poster">Posters</button>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Código</th><th>Equipo / participante</th><th>Proyecto</th><th>Solución propuesta</th><th>Tutor</th><th>Estado</th></tr></thead><tbody id="groupTableBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="section" id="finalistas">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Resultados · Etapa 2</div>
+          <h2 class="section-title">Selección de finalistas por categoría</h2>
+          <p class="section-desc">
+            Publicación de los 10 finalistas Junior y los 10 finalistas Senior con el puntaje obtenido en la evaluación preliminar y su estado dentro del proceso.
+          </p>
+        </div>
+      </div>
+
+      <div class="final-tabs">
+        <button class="chip-btn active" data-finalcat="Junior">Top 10 Junior</button>
+        <button class="chip-btn" data-finalcat="Senior">Top 10 Senior</button>
+      </div>
+      <div class="result-grid" id="finalistsGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="ganadores" style="background:#fbfcfa;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Resultados · Etapa 3</div>
+          <h2 class="section-title">Ganadores oficiales de la edición 2026</h2>
+          <p class="section-desc">
+            Publicación de los ganadores con información ampliada del proyecto, solución propuesta, puntaje final e integrantes del equipo o participante reconocido.
+          </p>
+        </div>
+      </div>
+      <div class="winner-grid" id="winnerGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="reconocimientos">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Resultados · Etapa 4</div>
+          <h2 class="section-title">Reconocimientos oficiales</h2>
+          <p class="section-desc">
+            Reconocimientos institucionales previstos para la premiación final del evento, organizados por categoría y modalidad académica.
+          </p>
+        </div>
+      </div>
+      <div class="premios-grid">
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-medal"></i>Junior</span><div class="icon-box"><i class="fas fa-medal"></i></div><h3>Primer lugar Junior</h3><p>Reconocimiento oficial a la mejor propuesta de la categoría Junior.</p></article>
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-award"></i>Junior</span><div class="icon-box"><i class="fas fa-award"></i></div><h3>Segundo lugar Junior</h3><p>Reconocimiento oficial al segundo mejor desempeño Junior.</p></article>
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-trophy"></i>Senior</span><div class="icon-box"><i class="fas fa-trophy"></i></div><h3>Primer lugar Senior</h3><p>Reconocimiento oficial a la mejor propuesta de la categoría Senior.</p></article>
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-star"></i>Senior</span><div class="icon-box"><i class="fas fa-star"></i></div><h3>Segundo lugar Senior</h3><p>Reconocimiento oficial al segundo mejor desempeño Senior.</p></article>
+        <article class="prize-card"><span class="prize-highlight"><i class="fas fa-scroll"></i>Posters</span><div class="icon-box"><i class="fas fa-scroll"></i></div><h3>Mejor Poster Académico</h3><p>Reconocimiento oficial al poster de mayor calidad técnica y académica.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="jurados" style="background:#fbfcfa;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Jurados y comités</div>
+          <h2 class="section-title">Perfiles y experticia de jurados</h2>
+          <p class="section-desc">
+            Los perfiles se presentan de forma más amplia para que los participantes comprendan el enfoque profesional desde el cual cada jurado revisa los proyectos y posters, según el rol asignado dentro de la estructura del evento.
+          </p>
+        </div>
+      </div>
+      <div class="jury-grid" id="juryGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="galeria">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Galería del evento</div>
+          <h2 class="section-title">Cobertura visual y audiovisual</h2>
+          <p class="section-desc">
+            Espacio institucional para video, memoria fotográfica del montaje, evaluación, posters, premiación y fotografía oficial de clausura. Esta sección fortalece la visibilidad del evento y deja registro de la edición 2026.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="video-box card">
+          <iframe src="https://www.youtube-nocookie.com/embed/-r7oc5v_bNY?rel=0&modestbranding=1&playsinline=1" title="Video del evento" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div class="photo-stack">
+          <div class="photo-card"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=80" alt="Montaje del evento"><div class="photo-overlay"><strong>Montaje y recorrido</strong><span>Registro, señalética, stands y zona de posters.</span></div></div>
+          <div class="photo-card"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80" alt="Evaluación de proyectos"><div class="photo-overlay"><strong>Evaluación por jurados</strong><span>Mesas Junior y Senior, revisión técnica y recorrido académico.</span></div></div>
+          <div class="photo-card"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80" alt="Premiación y cierre"><div class="photo-overlay"><strong>Premiación y clausura</strong><span>Entrega de reconocimientos y fotografía oficial del evento.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contacto" style="background:linear-gradient(135deg,var(--green-950),#082f18);">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow" style="color:var(--gold);">Contacto y continuidad</div>
+          <h2 class="section-title" style="color:#fff;">Canales oficiales del evento</h2>
+          <p class="section-desc" style="color:rgba(255,255,255,.72);">El portal queda vinculado a los canales institucionales de la carrera para consultas, coordinación, difusión y continuidad anual de la Expoferia.</p>
+        </div>
+      </div>
+      <div class="contacts-grid">
+        <article class="contact-card card"><div class="icon-box"><i class="fas fa-envelope"></i></div><h3>Correo institucional</h3><p>logistica_transporte@upec.edu.ec</p><a href="mailto:logistica_transporte@upec.edu.ec" class="mini-btn"><i class="fas fa-paper-plane"></i>Enviar correo</a></article>
+        <article class="contact-card card"><div class="icon-box"><i class="fas fa-phone"></i></div><h3>Teléfono de contacto</h3><p>(+593) 0998654247</p><a href="tel:+5930998654247" class="mini-btn"><i class="fas fa-phone-volume"></i>Llamar</a></article>
+        <article class="contact-card card"><div class="icon-box"><i class="fab fa-facebook"></i></div><h3>Red social del programa</h3><p>Ing. Logística y Transporte UPEC</p><a href="https://www.facebook.com/Ing.logistrans" target="_blank" rel="noopener noreferrer" class="mini-btn"><i class="fas fa-arrow-up-right-from-square"></i>Ver perfil</a></article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p><strong>Expo Logística y Transporte UPEC 2026</strong> · Hackathon académico, expoferia institucional y posters académicos · Carrera de Logística y Transporte · Universidad Politécnica Estatal del Carchi.</p>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop"><i class="fas fa-arrow-up"></i></button>
+
+  <div class="modal" id="globalModal">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose"><i class="fas fa-xmark"></i></button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const backTop = document.getElementById('backTop');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id], header[id]');
+    const CURRENT_DATE = new Date('2026-04-02');
+
+    const juniorCases = [{"c":"J-01","e":"Equipo Junior 01","p":"Sistema inteligente de inventarios para un CEDI universitario","s":"Dashboard Power BI para control de inventarios y alertas de reposición","t":"PhD. Omar Alpala"},{"c":"J-02","e":"Equipo Junior 02","p":"Optimización de almacenamiento para productos de alta rotación","s":"Rediseño de layout y zonas ABC para almacenamiento eficiente","t":"MSc. Byron Zurita"},{"c":"J-03","e":"Equipo Junior 03","p":"Mejora del proceso de recepción y despacho","s":"Flujo estandarizado de recepción-despacho con control visual","t":"MSc. Israel Herrera"},{"c":"J-04","e":"Equipo Junior 04","p":"Diseño de layout para bodega minorista","s":"Plano CAD y redistribución del layout de bodega","t":"MSc. Argenis Heredia"},{"c":"J-05","e":"Equipo Junior 05","p":"Control de stock mínimo y máximo en almacén","s":"Tablero de control con stock mínimo y máximo automatizado","t":"Ing. Daniel Beltrán"},{"c":"J-06","e":"Equipo Junior 06","p":"Reducción de quiebres de inventario en tienda","s":"Modelo de reposición para evitar quiebres de inventario","t":"PhD. Omar Alpala"},{"c":"J-07","e":"Equipo Junior 07","p":"Gestión visual de almacén con tableros digitales","s":"Tablero digital de indicadores operativos de almacén","t":"MSc. Byron Zurita"},{"c":"J-08","e":"Equipo Junior 08","p":"Trazabilidad interna de materiales en bodega","s":"Sistema de trazabilidad interna mediante codificación QR","t":"MSc. Israel Herrera"},{"c":"J-09","e":"Equipo Junior 09","p":"Plan de abastecimiento para insumos de laboratorio","s":"Plan de abastecimiento semanal con indicadores de consumo","t":"MSc. Argenis Heredia"},{"c":"J-10","e":"Equipo Junior 10","p":"Optimización de pedidos internos en campus","s":"Modelo de pedidos internos con tiempos estándar","t":"Ing. Daniel Beltrán"},{"c":"J-11","e":"Equipo Junior 11","p":"Clasificación ABC para almacén académico","s":"Clasificación ABC y política de ubicación de productos","t":"PhD. Omar Alpala"},{"c":"J-12","e":"Equipo Junior 12","p":"Sistema básico de alertas de reposición","s":"Sistema de alertas de reposición con datos históricos","t":"MSc. Byron Zurita"},{"c":"J-13","e":"Equipo Junior 13","p":"Flujo eficiente de picking en mini CEDI","s":"Propuesta de picking por rutas cortas en mini CEDI","t":"MSc. Israel Herrera"},{"c":"J-14","e":"Equipo Junior 14","p":"Modelo de rotación de inventarios","s":"Modelo de rotación FIFO/FEFO para almacén académico","t":"MSc. Argenis Heredia"},{"c":"J-15","e":"Equipo Junior 15","p":"Control de entradas y salidas con dashboard","s":"Dashboard de control de entradas y salidas","t":"Ing. Daniel Beltrán"},{"c":"J-16","e":"Equipo Junior 16","p":"Mejora de tiempos en despacho de suministros","s":"Mejora operativa del despacho con redistribución de tareas","t":"PhD. Omar Alpala"},{"c":"J-17","e":"Equipo Junior 17","p":"Propuesta de señalización logística de almacén","s":"Sistema de señalización logística y recorrido de materiales","t":"MSc. Byron Zurita"},{"c":"J-18","e":"Equipo Junior 18","p":"Sistema de codificación para inventarios","s":"Codificación alfanumérica para trazabilidad de inventarios","t":"MSc. Israel Herrera"},{"c":"J-19","e":"Equipo Junior 19","p":"Control logístico de materiales educativos","s":"Control logístico de materiales por categorías de uso","t":"MSc. Argenis Heredia"},{"c":"J-20","e":"Equipo Junior 20","p":"Gestión de inventario con apoyo de Power BI","s":"Power BI para seguimiento del comportamiento del inventario","t":"Ing. Daniel Beltrán"}];
+    const seniorCases = [{"c":"S-01","e":"Equipo Senior 01","p":"Digital twin para optimización de picking y rutas internas de almacén","s":"Simulación FlexSim y tablero de indicadores para reducción de tiempos operativos","t":"MSc. Israel Herrera"},{"c":"S-02","e":"Equipo Senior 02","p":"Optimización de distribución física sostenible en última milla","s":"Modelo de ruteo verde con indicadores de emisiones","t":"MSc. Argenis Heredia"},{"c":"S-03","e":"Equipo Senior 03","p":"Simulación de operaciones logísticas en centro de distribución","s":"Simulación integral del CEDI con análisis de cuellos de botella","t":"Ing. Daniel Beltrán"},{"c":"S-04","e":"Equipo Senior 04","p":"Modelo de ruteo para reparto urbano con restricciones","s":"Modelo matemático de ruteo urbano con restricciones de capacidad","t":"PhD. Omar Alpala"},{"c":"S-05","e":"Equipo Senior 05","p":"Planificación de cadena de suministro para agroindustria","s":"Plan maestro de suministro con analítica de datos","t":"MSc. Byron Zurita"},{"c":"S-06","e":"Equipo Senior 06","p":"Optimización del transporte intermodal regional","s":"Propuesta de transporte intermodal optimizado con costos comparados","t":"MSc. Israel Herrera"},{"c":"S-07","e":"Equipo Senior 07","p":"Diseño de red logística para distribución de perecibles","s":"Red logística de distribución con nodos y tiempos de servicio","t":"MSc. Argenis Heredia"},{"c":"S-08","e":"Equipo Senior 08","p":"Trazabilidad integral de cadena de frío en transporte","s":"Sistema de trazabilidad de cadena de frío con IoT y alertas","t":"Ing. Daniel Beltrán"},{"c":"S-09","e":"Equipo Senior 09","p":"Modelo de forecasting para demanda logística","s":"Modelo de pronóstico de demanda con visualización en Power BI","t":"PhD. Omar Alpala"},{"c":"S-10","e":"Equipo Senior 10","p":"Optimización de costos logísticos en centro de distribución","s":"Estrategia de reducción de costos logísticos basada en KPIs","t":"MSc. Byron Zurita"},{"c":"S-11","e":"Equipo Senior 11","p":"Simulación de muelles y tiempos de carga/descarga","s":"Simulación de muelles y programación de ventanas horarias","t":"MSc. Israel Herrera"},{"c":"S-12","e":"Equipo Senior 12","p":"Diseño de KPIs para operaciones de almacén avanzado","s":"Cuadro de mando integral para almacén avanzado","t":"MSc. Argenis Heredia"},{"c":"S-13","e":"Equipo Senior 13","p":"Modelo de abastecimiento colaborativo entre nodos logísticos","s":"Modelo colaborativo de abastecimiento y sincronización de inventarios","t":"Ing. Daniel Beltrán"},{"c":"S-14","e":"Equipo Senior 14","p":"Análisis de cuellos de botella en distribución física","s":"Análisis de procesos y rediseño de flujo de distribución","t":"PhD. Omar Alpala"},{"c":"S-15","e":"Equipo Senior 15","p":"Optimización de inventarios multinivel","s":"Optimización de inventario multinivel con políticas de reabastecimiento","t":"MSc. Byron Zurita"},{"c":"S-16","e":"Equipo Senior 16","p":"Gemelo digital para procesos de producción y almacén","s":"Gemelo digital del flujo producción-almacén con escenarios","t":"MSc. Israel Herrera"},{"c":"S-17","e":"Equipo Senior 17","p":"Modelo de transporte verde con reducción de emisiones","s":"Modelo de logística verde con evaluación de huella de carbono","t":"MSc. Argenis Heredia"},{"c":"S-18","e":"Equipo Senior 18","p":"Simulación del flujo portuario de contenedores","s":"Simulación del flujo portuario y tiempos de permanencia","t":"Ing. Daniel Beltrán"},{"c":"S-19","e":"Equipo Senior 19","p":"Optimización del diseño de rutas con GIS","s":"Diseño de rutas con ArcGIS y criterios de costo-tiempo","t":"PhD. Omar Alpala"},{"c":"S-20","e":"Equipo Senior 20","p":"Sistema analítico para priorización de pedidos","s":"Sistema analítico para secuenciación y priorización de pedidos","t":"MSc. Byron Zurita"}];
+    const posters = [{"c":"P-01","e":"Participante Poster 01","p":"Modelo de trazabilidad para cadena de frío en transporte de lácteos","s":"Poster técnico con propuesta de control de temperatura y trazabilidad","t":"MSc. Argenis Heredia"},{"c":"P-02","e":"Participante Poster 02","p":"Análisis de costos logísticos en distribución minorista","s":"Modelo de análisis de costos y mejoras operativas","t":"Ing. Daniel Beltrán"},{"c":"P-03","e":"Participante Poster 03","p":"Propuesta de mejora para almacenamiento de perecibles","s":"Propuesta visual de almacenamiento FEFO para perecibles","t":"PhD. Omar Alpala"},{"c":"P-04","e":"Participante Poster 04","p":"Evaluación de indicadores logísticos en un CEDI local","s":"Sistema de KPIs para evaluar desempeño logístico","t":"MSc. Byron Zurita"},{"c":"P-05","e":"Participante Poster 05","p":"Optimización del picking en almacenes de pequeña escala","s":"Poster con rediseño del proceso de picking","t":"MSc. Israel Herrera"},{"c":"P-06","e":"Participante Poster 06","p":"Diseño de ruta para distribución urbana de encomiendas","s":"Propuesta de ruta óptima con criterios de distancia y tiempo","t":"MSc. Argenis Heredia"},{"c":"P-07","e":"Participante Poster 07","p":"Estudio de tiempos en procesos de recepción de mercancías","s":"Análisis de tiempos y recomendaciones de mejora","t":"Ing. Daniel Beltrán"},{"c":"P-08","e":"Participante Poster 08","p":"Trazabilidad de inventarios con códigos QR","s":"Trazabilidad básica con codificación QR y control visual","t":"PhD. Omar Alpala"},{"c":"P-09","e":"Participante Poster 09","p":"Análisis de abastecimiento en cadenas agroalimentarias","s":"Mapa de abastecimiento para productos agroalimentarios","t":"MSc. Byron Zurita"},{"c":"P-10","e":"Participante Poster 10","p":"Modelo de gestión de devoluciones en retail","s":"Modelo de gestión inversa para devoluciones minoristas","t":"MSc. Israel Herrera"},{"c":"P-11","e":"Participante Poster 11","p":"Caracterización logística de operaciones portuarias","s":"Poster analítico sobre nodos y flujo portuario","t":"MSc. Argenis Heredia"},{"c":"P-12","e":"Participante Poster 12","p":"Propuesta para reducción de desperdicios en distribución","s":"Propuesta de mejora para reducción de desperdicios logísticos","t":"Ing. Daniel Beltrán"},{"c":"P-13","e":"Participante Poster 13","p":"Uso de dashboards para control logístico","s":"Uso de dashboard para visualización de indicadores","t":"PhD. Omar Alpala"},{"c":"P-14","e":"Participante Poster 14","p":"Análisis comparativo de políticas de inventario","s":"Comparación de políticas EOQ, punto de reorden y stock seguridad","t":"MSc. Byron Zurita"},{"c":"P-15","e":"Participante Poster 15","p":"Diagnóstico de almacenes en empresas locales","s":"Diagnóstico técnico de almacenes locales","t":"MSc. Israel Herrera"},{"c":"P-16","e":"Participante Poster 16","p":"Propuesta de layout para microcentro de distribución","s":"Layout propuesto para microcentro de distribución","t":"MSc. Argenis Heredia"},{"c":"P-17","e":"Participante Poster 17","p":"Modelo de cadena de suministro sostenible","s":"Cadena de suministro sostenible con enfoque de impacto","t":"Ing. Daniel Beltrán"},{"c":"P-18","e":"Participante Poster 18","p":"Estudio de variabilidad de demanda en abastecimiento","s":"Análisis de demanda y lineamientos de abastecimiento","t":"PhD. Omar Alpala"},{"c":"P-19","e":"Participante Poster 19","p":"Análisis de rutas escolares con enfoque logístico","s":"Diseño de ruta escolar con enfoque de optimización","t":"MSc. Byron Zurita"},{"c":"P-20","e":"Participante Poster 20","p":"Modelo de control de temperatura en transporte perecible","s":"Control térmico y monitoreo de transporte perecible","t":"MSc. Israel Herrera"}];
+    const finalistasJunior = [{"r":1,"c":"J-06","e":"Equipo Junior 06","p":"Reducción de quiebres de inventario en tienda","s":"Modelo de reposición para evitar quiebres de inventario","pt":90,"o":"Ganador","t":"PhD. Omar Alpala"},{"r":2,"c":"J-13","e":"Equipo Junior 13","p":"Flujo eficiente de picking en mini CEDI","s":"Propuesta de picking por rutas cortas en mini CEDI","pt":90,"o":"Ganador","t":"MSc. Israel Herrera"},{"r":3,"c":"J-20","e":"Equipo Junior 20","p":"Gestión de inventario con apoyo de Power BI","s":"Power BI para seguimiento del comportamiento del inventario","pt":90,"o":"Finalista","t":"Ing. Daniel Beltrán"},{"r":4,"c":"J-05","e":"Equipo Junior 05","p":"Control de stock mínimo y máximo en almacén","s":"Tablero de control con stock mínimo y máximo automatizado","pt":88,"o":"Finalista","t":"Ing. Daniel Beltrán"},{"r":5,"c":"J-12","e":"Equipo Junior 12","p":"Sistema básico de alertas de reposición","s":"Sistema de alertas de reposición con datos históricos","pt":88,"o":"Finalista","t":"MSc. Byron Zurita"},{"r":6,"c":"J-19","e":"Equipo Junior 19","p":"Control logístico de materiales educativos","s":"Control logístico de materiales por categorías de uso","pt":88,"o":"Finalista","t":"MSc. Argenis Heredia"},{"r":7,"c":"J-04","e":"Equipo Junior 04","p":"Diseño de layout para bodega minorista","s":"Plano CAD y redistribución del layout de bodega","pt":86,"o":"Finalista","t":"MSc. Argenis Heredia"},{"r":8,"c":"J-11","e":"Equipo Junior 11","p":"Clasificación ABC para almacén académico","s":"Clasificación ABC y política de ubicación de productos","pt":86,"o":"Finalista","t":"PhD. Omar Alpala"},{"r":9,"c":"J-18","e":"Equipo Junior 18","p":"Sistema de codificación para inventarios","s":"Codificación alfanumérica para trazabilidad de inventarios","pt":86,"o":"Finalista","t":"MSc. Israel Herrera"},{"r":10,"c":"J-03","e":"Equipo Junior 03","p":"Mejora del proceso de recepción y despacho","s":"Flujo estandarizado de recepción-despacho con control visual","pt":84,"o":"Finalista","t":"MSc. Israel Herrera"}];
+    const finalistasSenior = [{"r":1,"c":"S-07","e":"Equipo Senior 07","p":"Diseño de red logística para distribución de perecibles","s":"Red logística de distribución con nodos y tiempos de servicio","pt":95.67,"o":"Ganador","t":"MSc. Argenis Heredia"},{"r":2,"c":"S-15","e":"Equipo Senior 15","p":"Optimización de inventarios multinivel","s":"Optimización de inventario multinivel con políticas de reabastecimiento","pt":95.67,"o":"Ganador","t":"MSc. Byron Zurita"},{"r":3,"c":"S-06","e":"Equipo Senior 06","p":"Optimización del transporte intermodal regional","s":"Propuesta de transporte intermodal optimizado con costos comparados","pt":93.67,"o":"Finalista","t":"MSc. Israel Herrera"},{"r":4,"c":"S-14","e":"Equipo Senior 14","p":"Análisis de cuellos de botella en distribución física","s":"Análisis de procesos y rediseño de flujo de distribución","pt":93.67,"o":"Finalista","t":"PhD. Omar Alpala"},{"r":5,"c":"S-05","e":"Equipo Senior 05","p":"Planificación de cadena de suministro para agroindustria","s":"Plan maestro de suministro con analítica de datos","pt":91.67,"o":"Finalista","t":"MSc. Byron Zurita"},{"r":6,"c":"S-13","e":"Equipo Senior 13","p":"Modelo de abastecimiento colaborativo entre nodos logísticos","s":"Modelo colaborativo de abastecimiento y sincronización de inventarios","pt":91.67,"o":"Finalista","t":"Ing. Daniel Beltrán"},{"r":7,"c":"S-04","e":"Equipo Senior 04","p":"Modelo de ruteo para reparto urbano con restricciones","s":"Modelo matemático de ruteo urbano con restricciones de capacidad","pt":89.67,"o":"Finalista","t":"PhD. Omar Alpala"},{"r":8,"c":"S-12","e":"Equipo Senior 12","p":"Diseño de KPIs para operaciones de almacén avanzado","s":"Cuadro de mando integral para almacén avanzado","pt":89.67,"o":"Finalista","t":"MSc. Argenis Heredia"},{"r":9,"c":"S-20","e":"Equipo Senior 20","p":"Sistema analítico para priorización de pedidos","s":"Sistema analítico para secuenciación y priorización de pedidos","pt":89.67,"o":"Finalista","t":"MSc. Byron Zurita"},{"r":10,"c":"S-03","e":"Equipo Senior 03","p":"Simulación de operaciones logísticas en centro de distribución","s":"Simulación integral del CEDI con análisis de cuellos de botella","pt":87.67,"o":"Finalista","t":"Ing. Daniel Beltrán"}];
+    const ganadores = [{"c":"J-06","e":"Equipo Junior 06","p":"Reducción de quiebres de inventario en tienda","s":"Modelo de reposición para evitar quiebres de inventario","i":["Brayan Vallejo","Sofía Caicedo","Andrea Paredes","Miguel Cevallos","José Pantoja"],"pt":91.33,"rec":"Primer lugar Junior"},{"c":"J-13","e":"Equipo Junior 13","p":"Flujo eficiente de picking en mini CEDI","s":"Propuesta de picking por rutas cortas en mini CEDI","i":["Jonathan Rosales","Mariela Chávez","Ismael Torres","Daniel Vinueza","Fernanda Minda"],"pt":89,"rec":"Segundo lugar Junior"},{"c":"S-15","e":"Equipo Senior 15","p":"Optimización de inventarios multinivel","s":"Optimización de inventario multinivel con políticas de reabastecimiento","i":["Natalia Melo","Cristian Muñoz","Gabriela Lucero","Diego Castillo","Belén Obando"],"pt":95.33,"rec":"Primer lugar Senior"},{"c":"S-07","e":"Equipo Senior 07","p":"Diseño de red logística para distribución de perecibles","s":"Red logística de distribución con nodos y tiempos de servicio","i":["Daniel Vinueza","Fernanda Minda","Alex Benítez","Andrea Rosero","Karen Granja"],"pt":93.67,"rec":"Segundo lugar Senior"},{"c":"P-09","e":"Participante Poster 09","p":"Análisis de abastecimiento en cadenas agroalimentarias","s":"Mapa de abastecimiento para productos agroalimentarios","i":["Paula Vela"],"pt":92,"rec":"Mejor Poster Académico"}];
+    const jurados = [{"c":"J1","n":"Prof. Byron Zurita","a":"Gestión / evaluación","cat":"Junior"},{"c":"J2","n":"Prof. Juan Carlos López","a":"Procesos / operaciones","cat":"Junior"},{"c":"J3","n":"Prof. Israel Herrera","a":"Analítica / apoyo","cat":"Junior"},{"c":"J4","n":"Prof. Daniel Beltrán","a":"Metodología / apoyo","cat":"Junior"},{"c":"J5","n":"Prof. Omar Alpala","a":"Tecnología / simulación","cat":"Senior"},{"c":"J6","n":"Prof. Argenis Heredia","a":"Logística / evaluación","cat":"Senior"},{"c":"J7","n":"Prof. Eduardo Pozo","a":"Procesos / apoyo","cat":"Senior"},{"c":"J8","n":"Prof. Blanca Montenegro","a":"Calidad / apoyo","cat":"Senior"},{"c":"J9","n":"Prof. Dayana Bolaños","a":"Posters","cat":"Posters"},{"c":"J10","n":"Prof. Eugenia Antus","a":"Posters","cat":"Posters"}];
+
+    const availableJunior = ['J-01','J-03','J-08','J-12','J-17'];
+    const availableSenior = ['S-02','S-05','S-09','S-14','S-18'];
+
+    const modalInfo = {
+      naturaleza: {title:'Naturaleza del evento', html:`<p>La Expoferia Logística y Transporte UPEC 2026 posee naturaleza académica y estratégica. Académicamente, fortalece la formación práctica mediante resolución de casos, análisis de problemas, propuestas técnicas y comunicación profesional de resultados. Estratégicamente, se proyecta como hito anual de la carrera y plataforma de innovación aplicada.</p><div class="modal-grid"><div><strong>Modalidad</strong><span>Expoferia + hackathon académico + posters académicos.</span></div><div><strong>Proyección</strong><span>Evento escalable, visible y replicable en futuras ediciones.</span></div></div>`},
+      categorias: {title:'Categorías y participación', html:`<p>El hackathon se organiza en dos categorías para garantizar comparabilidad y equidad académica. Los posters académicos constituyen una línea paralela para noveno semestre.</p><ul><li><strong>Junior:</strong> segundo, tercero y cuarto semestre.</li><li><strong>Senior:</strong> quinto, sexto, séptimo y octavo semestre.</li><li><strong>Posters:</strong> noveno semestre, en modalidad individual o grupal según la naturaleza del trabajo.</li><li>Cada equipo del hackathon debe estar conformado por mínimo 3 y máximo 5 estudiantes.</li></ul>`},
+      entregables: {title:'Entregables obligatorios', html:`<p>Todos los equipos del hackathon deben presentar entregables en dos momentos: una fase preliminar y una fase final para finalistas.</p><ul><li><strong>Entrega preliminar:</strong> video pitch y proyecto escrito preliminar.</li><li><strong>Entrega final:</strong> proyecto escrito final, presentación en diapositivas, prototipo o evidencia técnica y defensa presencial.</li><li>La no entrega de cualquiera de los componentes obligatorios puede implicar descalificación o pérdida del derecho de evaluación.</li></ul>`},
+      evaluacion: {title:'Sistema de evaluación', html:`<p>La evaluación se organiza por componentes diferenciados para valorar integralmente el trabajo realizado.</p><div class="modal-grid"><div><strong>Proyecto escrito</strong><span>30% del total.</span></div><div><strong>Solución técnica / prototipo</strong><span>45% del total.</span></div><div><strong>Exposición y defensa oral</strong><span>25% del total.</span></div><div><strong>Posters</strong><span>Rúbrica independiente por claridad, calidad técnica, metodología, aporte, diseño y exposición.</span></div></div>`},
+      posters: {title:'Posters académicos', html:`<p>La línea de posters académicos se integra al recorrido general de la Expoferia con una zona específica y señalizada. Cada poster dispone de 5 minutos de explicación y 3 minutos de preguntas del jurado.</p><ul><li>Presentación breve y visual.</li><li>Evaluación paralela e independiente del hackathon.</li><li>Reconocimiento oficial al Mejor Poster Académico.</li></ul>`},
+      pitch: {title:'Pitch final y demo day', html:`<p>Participan 10 equipos Junior y 10 equipos Senior en dos mesas o salas paralelas. Cada equipo dispone de 12 minutos: 7 para exposición y demostración, y 5 para preguntas del jurado.</p><ul><li>Se recomienda máximo 8 diapositivas, más portada y cierre.</li><li>La demostración del prototipo debe integrarse al pitch y no mostrarse como bloque aislado.</li><li>Todo el equipo debe estar presente salvo causa justificada.</li></ul>`},
+      checklist: {title:'Checklist por fases y control de entregables', html:`<p>El sistema de seguimiento del evento contempla checklist por fases, ficha de control de entregables, matriz de asignación de jurados, consolidado general, matriz de finalistas, actas y matriz de premiación.</p><ul><li>Inscripción</li><li>Caso asignado</li><li>Entrega preliminar</li><li>Video pitch</li><li>Documento preliminar</li><li>Finalista</li><li>Entrega final</li><li>Presentación</li><li>Prototipo</li><li>Asistencia</li></ul>`},
+      escala: {title:'Escala oficial de evaluación', html:`<div class="modal-grid"><div><strong>No evidencia</strong><span>0 puntos</span></div><div><strong>Insuficiente</strong><span>1–3 puntos</span></div><div><strong>Básico</strong><span>4–6 puntos</span></div><div><strong>Bueno</strong><span>7–8 puntos</span></div><div><strong>Excelente</strong><span>9–10 puntos</span></div></div><p>La escala se adapta proporcionalmente a criterios de mayor peso dentro de las rúbricas oficiales.</p>`},
+      rubricaPreliminar: {title:'Rúbrica preliminar de selección de finalistas', html:`<p>La rúbrica preliminar se usa para la semifinal digital y evalúa la comprensión del problema, coherencia de la solución, integración preliminar de tecnologías, calidad del documento preliminar, viabilidad preliminar y claridad del video pitch.</p>`},
+      rubricaFinal: {title:'Rúbrica final del hackathon', html:`<p>La rúbrica final se estructura en tres partes: documento y contenido técnico, propuesta e innovación, y presentación y defensa oral. Permite valorar diagnóstico, metodología, resultados, factibilidad, innovación, aplicabilidad y respuesta a preguntas.</p>`},
+      rubricaPosters: {title:'Rúbrica de evaluación de posters académicos', html:`<p>La evaluación de posters considera claridad del problema o tema, calidad técnica del contenido, sustento metodológico, aporte o aplicabilidad, diseño visual y capacidad de síntesis en la exposición oral.</p>`}
+    };
+
+    const milestones = [
+      {icon:'fa-gears', date:'24 mar – 2 abr', title:'Preparación y organización', desc:'Diseño de banco de casos, reglamento, rúbricas, matrices, roles operativos y difusión inicial.', points:['Banco de casos listo','Reglamento validado','Formularios definidos'], status:'current'},
+      {icon:'fa-bullhorn', date:'3 abr – 6 abr', title:'Convocatoria e inscripción', desc:'Difusión oficial e inscripción de grupos del hackathon y posters académicos.', points:['Inicio de registro','Cierre de inscripciones'], status:'next'},
+      {icon:'fa-rocket', date:'7 abr – 8 abr', title:'Lanzamiento y hackathon', desc:'Socialización del evento, reglas, categorías y jornada intensiva de ideación y trabajo inicial.', points:['Lanzamiento oficial','Jornada intensiva'], status:'next'},
+      {icon:'fa-file-lines', date:'12 abr – 14 abr', title:'Entregas preliminares', desc:'Recepción de documento preliminar, video pitch y proceso de evaluación para seleccionar finalistas.', points:['Entrega preliminar','Selección de finalistas'], status:'next'},
+      {icon:'fa-screwdriver-wrench', date:'16 abr – 18 abr', title:'Ajuste de finalistas', desc:'Mejora del documento final, preparación de presentación y consolidación del prototipo o evidencia técnica.', points:['Documento final','Presentación final'], status:'next'},
+      {icon:'fa-trophy', date:'20 abr', title:'Expoferia final y premiación', desc:'Desarrollo del evento principal con evaluación final, posters, reconocimientos y clausura institucional.', points:['Expoferia final','Premiación oficial'], status:'next'}
+    ];
+
+    const finalDayData = [
+      {time:'07:00 – 07:30', icon:'fa-screwdriver-wrench', title:'Preparación técnica y montaje', desc:'Verificación de espacios, señalética, sonido, proyección, conectividad y mesas de control.', tags:['Montaje','Soporte técnico']},
+      {time:'07:30 – 08:15', icon:'fa-box-open', title:'Ingreso de equipos y posters', desc:'Instalación de stands, organización de materiales, carga de presentaciones y prueba de prototipos.', tags:['Stands','Posters','Prototipos']},
+      {time:'08:15 – 08:45', icon:'fa-flag-checkered', title:'Apertura institucional y pautas finales', desc:'Acto de apertura, bienvenida, recordatorio de la dinámica del evento y lineamientos para evaluación.', tags:['Apertura','Pautas','Comité']},
+      {time:'08:45 – 09:20', icon:'fa-users-viewfinder', title:'Recorrido inicial y apertura al público', desc:'Visita de autoridades y asistentes por la zona de expoferia antes del inicio formal de las evaluaciones.', tags:['Recorrido','Difusión']},
+      {time:'09:30 – 10:30', icon:'fa-person-chalkboard', title:'Ronda 1 de evaluación Junior y Senior', desc:'Primera ronda de exposiciones por categoría con pitch, demostración y preguntas del jurado.', tags:['Hackathon','Pitch','Jurados']},
+      {time:'10:40 – 11:40', icon:'fa-chalkboard-user', title:'Ronda 2 de evaluación Junior y Senior', desc:'Segunda ronda de exposiciones para completar la evaluación del hackathon por categorías.', tags:['Ronda 2','Evaluación']},
+      {time:'09:30 – 12:20', icon:'fa-scroll', title:'Evaluación paralela de posters académicos', desc:'Revisión continua de posters con explicación breve, preguntas y valoración independiente.', tags:['Posters','Evaluación paralela']},
+      {time:'11:40 – 12:20', icon:'fa-square-poll-vertical', title:'Consolidación preliminar de resultados', desc:'Revisión de puntajes, control de actas y verificación del cierre de evaluaciones.', tags:['Consolidado','Actas']},
+      {time:'12:20 – 12:40', icon:'fa-scale-balanced', title:'Deliberación final', desc:'Validación de ganadores, revisión de observaciones finales y preparación del protocolo de premiación.', tags:['Deliberación','Validación']},
+      {time:'12:40 – 13:20', icon:'fa-trophy', title:'Premiación y clausura', desc:'Entrega de reconocimientos oficiales, cierre institucional y fotografía del evento.', tags:['Premiación','Clausura']}
+    ];
+
+    function normalize(text=''){ return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+
+    function techTags(title, solution){
+      const t = normalize(title + ' ' + solution);
+      const tags = [];
+      if(t.includes('power bi') || t.includes('dashboard') || t.includes('kpi')) tags.push('Power BI','Analítica');
+      if(t.includes('cad') || t.includes('layout')) tags.push('CAD','Layout');
+      if(t.includes('qr') || t.includes('trazabilidad') || t.includes('codificacion')) tags.push('Trazabilidad','QR');
+      if(t.includes('simulacion') || t.includes('flexsim') || t.includes('gemelo') || t.includes('digital twin')) tags.push('Simulación');
+      if(t.includes('iot') || t.includes('sensores') || t.includes('frio')) tags.push('IoT');
+      if(t.includes('gis') || t.includes('arcgis') || t.includes('ruta') || t.includes('ruteo')) tags.push('GIS');
+      if(t.includes('inventario')) tags.push('Inventarios');
+      if(t.includes('transporte')) tags.push('Transporte');
+      if(t.includes('sostenible') || t.includes('verde')) tags.push('Sostenibilidad');
+      return [...new Set(tags)].slice(0,4).length ? [...new Set(tags)].slice(0,4) : ['Logística','Procesos'];
+    }
+
+    function challengeContext(item){
+      return `El reto se orienta al análisis y mejora del problema planteado en “${item.p}”, mediante una propuesta técnica que pueda representarse con evidencia, prototipo, dashboard, simulación, rediseño de proceso o solución logística aplicada.`;
+    }
+
+    function challengeObjective(item){
+      return `Diseñar y sustentar una solución como “${item.s}”, demostrando comprensión del caso, coherencia técnica, factibilidad y valor de implementación.`;
+    }
+
+    function showModal(title, html){
+      document.getElementById('modalContent').innerHTML = `<div class="eyebrow">Información ampliada</div><h3>${title}</h3>${html}`;
+      document.getElementById('globalModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(){
+      document.getElementById('globalModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('globalModal').addEventListener('click', e => { if(e.target.id === 'globalModal') closeModal(); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 24);
+      backTop.classList.toggle('show', window.scrollY > 420);
+    });
+    backTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+          if(active) active.classList.add('active');
+        }
+      });
+    }, {threshold:.35});
+    sections.forEach(s => sectionObserver.observe(s));
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        if(!tab) return;
+        const parent = btn.closest('.section') || document;
+        parent.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
+        parent.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const panel = document.getElementById(tab);
+        if(panel) panel.classList.add('active');
+      });
+    });
+
+    const phaseData = {
+      preparacion: {
+        title:'Preparación y organización interna',
+        description:'Fase crítica en la que se estructuran banco de casos, reglamento, rúbricas, plantillas, formularios, jurados, comités, cronograma, materiales de difusión y matrices operativas.',
+        state:'Componente organizativo verificado',
+        outputs:'Banco de casos, reglamento oficial, formularios, matrices y cronograma.',
+        trace:'La trazabilidad de esta fase se refleja en la disponibilidad de documentos, formularios oficiales y estructura operativa completa.',
+        progress:[['Reglamento y lineamientos',100],['Banco de casos',100],['Matrices y formatos',100],['Difusión inicial',90]]
+      },
+      lanzamiento: {
+        title:'Lanzamiento oficial y convocatoria',
+        description:'Fase orientada a socializar reglas, cronograma, categorías, entregables, criterios de evaluación y casos. También activa registro de equipos y posters.',
+        state:'Publicación oficial del evento',
+        outputs:'Convocatoria, inscripciones, acceso a casos y socialización institucional.',
+        trace:'Permite seguimiento del número de registros, casos asignados y consultas de participantes.',
+        progress:[['Registro de equipos',100],['Registro de posters',100],['Asignación de casos',100],['Difusión institucional',95]]
+      },
+      desarrollo: {
+        title:'Desarrollo y evaluación preliminar',
+        description:'Etapa de jornada intensiva, elaboración del documento preliminar, video pitch y evidencia técnica, seguida de la evaluación preliminar para selección de finalistas.',
+        state:'Control académico y técnico',
+        outputs:'Documento preliminar, video pitch, evidencia y consolidado preliminar.',
+        trace:'La organización utiliza checklist de fases, control de entregables y consolidado preliminar por equipo.',
+        progress:[['Entrega preliminar',100],['Video pitch',100],['Documento preliminar',100],['Selección de finalistas',100]]
+      },
+      final: {
+        title:'Final, premiación y cierre',
+        description:'Incluye mejora de finalistas, expoferia final, evaluación simultánea de Junior, Senior y Posters, deliberación, actas y premiación oficial.',
+        state:'Cierre institucional y memoria del evento',
+        outputs:'Ganadores, finalistas, actas, memoria visual y resultados oficiales.',
+        trace:'Este bloque alimenta la publicación de reconocimientos, proyectos destacados y archivo histórico del evento.',
+        progress:[['Presentación de finalistas',100],['Evaluación final',100],['Premiación',100],['Memoria institucional',85]]
+      }
+    };
+
+    function renderPhase(key){
+      const item = phaseData[key];
+      document.getElementById('phaseContent').innerHTML = `
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+        <div class="trace-grid">
+          <div><strong>Estado</strong><span>${item.state}</span></div>
+          <div><strong>Entregables visibles</strong><span>${item.outputs}</span></div>
+        </div>
+        <p>${item.trace}</p>
+        <div class="progress-wrap">
+          ${item.progress.map(([label,value]) => `<div class="progress-item"><strong><span>${label}</span><span>${value}%</span></strong><div class="progress-bar"><span style="width:${value}%"></span></div></div>`).join('')}
+        </div>
+      `;
+    }
+    renderPhase('preparacion');
+    document.querySelectorAll('.phase-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.phase-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        renderPhase(card.dataset.phase);
+      });
+    });
+
+    function milestoneStatus(status){
+      if(status === 'done') return ['Finalizado','ms-done'];
+      if(status === 'current') return ['En curso','ms-current'];
+      return ['Próximo','ms-next'];
+    }
+
+    function renderMilestones(){
+      const host = document.getElementById('milestoneGrid');
+      host.innerHTML = milestones.map(item => {
+        const [label, cls] = milestoneStatus(item.status);
+        return `
+          <article class="milestone-row">
+            <div class="milestone-date"><strong>${item.date}</strong><span>Fecha clave</span></div>
+            <div class="milestone-main">
+              <div class="milestone-head">
+                <div><h4>${item.title}</h4><p>${item.desc}</p></div>
+                <span class="milestone-status ${cls}">${label}</span>
+              </div>
+              <div class="milestone-points">
+                ${item.points.map((p,i) => `<span class="point-chip ${i === item.points.length - 1 ? 'important' : ''}"><i class="fas ${i === item.points.length - 1 ? 'fa-calendar-check' : 'fa-check'}"></i>${p}</span>`).join('')}
+              </div>
+            </div>
+            <div class="milestone-side"><div class="icon-shell"><i class="fas ${item.icon}"></i></div></div>
+          </article>
+        `;
+      }).join('');
+    }
+    renderMilestones();
+
+    function renderAgenda(){
+      const host = document.getElementById('agendaBoard');
+      host.innerHTML = finalDayData.map(item => `
+        <article class="agenda-row">
+          <div class="agenda-time">${item.time}</div>
+          <div class="agenda-marker"><div class="agenda-bubble"><i class="fas ${item.icon}"></i></div></div>
+          <div class="agenda-card-full">
+            <h4>${item.title}</h4>
+            <p>${item.desc}</p>
+            <div class="agenda-tags">${item.tags.map(tag => `<span><i class="fas fa-tag"></i>${tag}</span>`).join('')}</div>
+          </div>
+        </article>
+      `).join('');
+    }
+    renderAgenda();
+
+    let currentCategory = 'Junior';
+    let currentFilter = 'Todos';
+
+    function getChallengeStatus(code, category){
+      const set = category === 'Junior' ? availableJunior : availableSenior;
+      return set.includes(code) ? 'Disponible' : 'No disponible';
+    }
+
+    function renderChallenges(){
+      const host = document.getElementById('challengeGrid');
+      const query = normalize(document.getElementById('challengeSearch').value || '');
+      const dataset = currentCategory === 'Junior' ? juniorCases : seniorCases;
+      const filtered = dataset.filter(item => {
+        const status = getChallengeStatus(item.c, currentCategory);
+        const byFilter = currentFilter === 'Todos' ? true : currentFilter === status;
+        const hay = normalize(`${item.c} ${item.e} ${item.p} ${item.s} ${item.t}`);
+        return byFilter && hay.includes(query);
+      });
+      host.innerHTML = filtered.map(item => {
+        const tags = techTags(item.p, item.s);
+        const status = getChallengeStatus(item.c, currentCategory);
+        const statusClass = status === 'Disponible' ? 'on' : 'off';
+        return `
+          <article class="challenge-card">
+            <div class="challenge-head">
+              <span class="challenge-code"><i class="fas fa-hashtag"></i>${item.c}</span>
+              <span class="availability ${statusClass}">${status}</span>
+            </div>
+            <h3>${item.p}</h3>
+            <p>${challengeContext(item)}</p>
+            <div class="challenge-meta">
+              <div><strong>Solución esperada</strong><span>${item.s}</span></div>
+              <div><strong>Docente de referencia</strong><span>${item.t}</span></div>
+            </div>
+            <div class="challenge-tags">${tags.map(tag => `<span><i class="fas fa-microchip"></i>${tag}</span>`).join('')}</div>
+            <div class="challenge-actions">
+              <button class="mini-btn" onclick='openChallenge(${JSON.stringify(item).replace(/'/g, "&apos;")})'><i class="fas fa-eye"></i>Ver detalle completo</button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function openChallenge(item){
+      const tags = techTags(item.p, item.s);
+      const status = getChallengeStatus(item.c, currentCategory);
+      showModal(item.p, `
+        <p><strong>Código:</strong> ${item.c} · <strong>Categoría:</strong> ${currentCategory} · <strong>Estado:</strong> ${status}</p>
+        <p>${challengeContext(item)}</p>
+        <div class="modal-grid">
+          <div><strong>Objetivo del reto</strong><span>${challengeObjective(item)}</span></div>
+          <div><strong>Solución referencial</strong><span>${item.s}</span></div>
+          <div><strong>Docente de referencia</strong><span>${item.t}</span></div>
+          <div><strong>Entregables esperados</strong><span>Proyecto escrito, video pitch, prototipo o evidencia técnica y presentación final.</span></div>
+        </div>
+        <p><strong>Tecnologías o enfoques sugeridos:</strong> ${tags.join(', ')}.</p>
+      `);
+    }
+    window.openChallenge = openChallenge;
+
+    document.querySelectorAll('[data-casecat]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-casecat]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.casecat;
+        renderChallenges();
+      });
+    });
+    document.querySelectorAll('[data-casefilter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-casefilter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.casefilter;
+        renderChallenges();
+      });
+    });
+    document.getElementById('challengeSearch').addEventListener('input', renderChallenges);
+    renderChallenges();
+
+    let currentGroupCat = 'Junior';
+    function renderGroupTable(){
+      const body = document.getElementById('groupTableBody');
+      const dataset = currentGroupCat === 'Junior' ? juniorCases : currentGroupCat === 'Senior' ? seniorCases : posters;
+      body.innerHTML = dataset.map(item => `
+        <tr>
+          <td><span class="table-tag">${item.c}</span></td>
+          <td>${item.e}</td>
+          <td>${item.p}</td>
+          <td>${item.s}</td>
+          <td>${item.t}</td>
+          <td>${currentGroupCat === 'Poster' ? 'Registrado' : 'Participante'}</td>
+        </tr>
+      `).join('');
+    }
+    document.querySelectorAll('[data-groupcat]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-groupcat]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentGroupCat = btn.dataset.groupcat;
+        renderGroupTable();
+      });
+    });
+    renderGroupTable();
+
+    let currentFinalCat = 'Junior';
+    function renderFinalists(){
+      const data = currentFinalCat === 'Junior' ? finalistasJunior : finalistasSenior;
+      document.getElementById('finalistsGrid').innerHTML = data.map(item => `
+        <article class="result-card">
+          <div class="icon-box"><i class="fas fa-ranking-star"></i></div>
+          <h3>${item.r}. ${item.e}</h3>
+          <p><strong>${item.p}</strong></p>
+          <p>${item.s}</p>
+          <div class="winner-meta">
+            <span><strong>Código:</strong> ${item.c}</span>
+            <span><strong>Puntaje:</strong> ${item.pt}</span>
+            <span><strong>Estado:</strong> ${item.o}</span>
+            <span><strong>Tutor:</strong> ${item.t}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+    document.querySelectorAll('[data-finalcat]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-finalcat]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFinalCat = btn.dataset.finalcat;
+        renderFinalists();
+      });
+    });
+    renderFinalists();
+
+    function renderWinners(){
+      document.getElementById('winnerGrid').innerHTML = ganadores.map(item => `
+        <article class="winner-card">
+          <span class="rank"><i class="fas fa-trophy"></i>${item.rec}</span>
+          <h3>${item.e}</h3>
+          <p><strong>Proyecto:</strong> ${item.p}</p>
+          <p><strong>Solución:</strong> ${item.s}</p>
+          <div class="winner-meta">
+            <span><strong>Código:</strong> ${item.c}</span>
+            <span><strong>Puntaje final:</strong> ${item.pt}</span>
+            <span><strong>Integrantes:</strong> ${item.i.join(', ')}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+    renderWinners();
+
+    function juryDescription(area, cat){
+      const key = normalize(area);
+      if(key.includes('gestion')) return 'Perfil orientado a la revisión integral de la propuesta, con capacidad para observar coherencia global, claridad de resultados, comparabilidad entre proyectos y solidez del planteamiento presentado durante la evaluación de la categoría ' + cat + '.';
+      if(key.includes('procesos / operaciones')) return 'Perfil enfocado en el análisis de procesos, flujo operativo, organización del sistema y consistencia funcional de la solución. Su mirada es especialmente útil para revisar lógica operativa, estructura de actividades y viabilidad práctica.';
+      if(key.includes('analitica')) return 'Perfil centrado en lectura de datos, interpretación de indicadores, sustento cuantitativo y uso de herramientas analíticas. Aporta una revisión técnica sobre evidencia, métricas y soporte de decisión dentro de la propuesta.';
+      if(key.includes('metodologia')) return 'Perfil orientado al rigor metodológico del proyecto, estructura del documento, coherencia entre problema, objetivos, solución y defensa oral. Su experticia se refleja en la calidad formal y académica de la propuesta.';
+      if(key.includes('tecnologia')) return 'Perfil con enfoque en integración tecnológica, simulación, herramientas digitales, prototipos y demostración técnica. Este jurado aporta una lectura especializada sobre innovación aplicada y uso pertinente de tecnologías de apoyo.';
+      if(key.includes('logistica')) return 'Perfil con orientación a la pertinencia logística de la solución, valor operativo, factibilidad de implementación y aporte aplicado al contexto de almacenes, transporte, distribución o cadena de suministro.';
+      if(key.includes('calidad')) return 'Perfil enfocado en consistencia, claridad, calidad del contenido, orden argumental y cumplimiento de los criterios definidos en la rúbrica. Su rol ayuda a mantener uniformidad y control de la evaluación.';
+      if(key.includes('posters')) return 'Perfil asignado a la evaluación de posters académicos con énfasis en síntesis temática, calidad visual, solidez del contenido, capacidad de comunicación breve y valor académico del trabajo presentado.';
+      return 'Participa en la evaluación técnica y académica del evento según la categoría asignada.';
+    }
+
+    function renderJuries(){
+      document.getElementById('juryGrid').innerHTML = jurados.map(item => `
+        <article class="jury-card">
+          <div class="icon-box"><i class="fas fa-user-tie"></i></div>
+          <h3>${item.n}</h3>
+          <p>${juryDescription(item.a, item.cat)}</p>
+          <div class="jury-meta">
+            <span><strong>Código:</strong> ${item.c}</span>
+            <span><strong>Área / rol:</strong> ${item.a}</span>
+            <span><strong>Categoría principal:</strong> ${item.cat}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+    renderJuries();
+
+    document.querySelectorAll('[data-modal]').forEach(el => {
+      el.addEventListener('click', () => {
+        const key = el.dataset.modal;
+        const info = modalInfo[key];
+        if(info) showModal(info.title, info.html);
+      });
+    });
+  </script>
+</body>
+</html>
