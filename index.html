@@ -276,8 +276,11 @@
     .case-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem}
     .case-code-mini{display:inline-flex;align-items:center;gap:.4rem;padding:.32rem .6rem;border-radius:999px;background:rgba(0,102,51,.08);color:var(--green-700);font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
     .case-status-mini{display:inline-flex;align-items:center;gap:.35rem;padding:.32rem .58rem;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
-    .case-status-mini.assigned{background:rgba(0,102,51,.10);color:var(--green-700)}
-    .case-status-mini.pending{background:rgba(240,192,64,.18);color:#7a5d00}
+    .case-status-mini.available{background:rgba(0,102,51,.10);color:var(--green-700)}
+    .case-status-mini.unavailable{background:rgba(158,51,51,.10);color:var(--danger)}
+    .availability-filter-wrap{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1rem}
+    .availability-filter-wrap .chip-btn{box-shadow:none}
+    .availability-empty{padding:1.2rem;border-radius:18px;background:var(--soft);border:1px dashed var(--line);color:var(--muted);font-size:.92rem;line-height:1.7}
     .case-card-mini h4{font-size:1.08rem;font-weight:800;color:var(--green-900);line-height:1.35;letter-spacing:-.02em}
     .case-card-mini h4 span{display:block;color:var(--green-950)}
     .case-detail-block{display:grid;gap:.85rem;margin-top:1rem}
@@ -666,6 +669,7 @@
       </div>
       <div class="semester-summary" id="semesterSummary"></div>
       <div class="semester-selector" id="semesterSelector"></div>
+      <div class="availability-filter-wrap" id="caseAvailabilityFilters"></div>
       <div class="semester-panel" id="semesterPanel"></div>
     </div>
   </section>
@@ -3173,6 +3177,11 @@
       {c:'S8-05', semester:'Semestre 8', p:'Terminal Portuaria Virtual Inteligente: simulación, calidad y administración de la DFI en un entorno XR', sector:'Servicios logísticos y terminales portuarias, con aplicación transversal a múltiples cadenas exportadoras.', subjects:['Distribución Física Internacional','Operaciones Portuarias','Ingeniería de la Calidad','Administración Logística'], prototype:'Simulación funcional del patio o terminal en FlexSim o herramienta equivalente; dashboard de KPIs en Power BI; modelo de proceso BPMN; base de datos de eventos o incidencias; y visualización XR o video demostrativo del entorno operativo.'}
     ];
 
+    const unavailableCases = new Set([]);
+    [juniorCases, seniorCases].forEach(group => group.forEach(item => {
+      item.availability = unavailableCases.has(item.c) ? 'unavailable' : 'available';
+    }));
+
     const juniorStructure = [
       {semester:'Semestre 2', level:'2', title:'Junior · Segundo nivel', estimatedCases:10, subjects:['Logística de Compras y Aprovisionamiento','Introducción al Transporte','Fundamentos de Programación']},
       {semester:'Semestre 3', level:'3', title:'Junior · Tercer nivel', estimatedCases:5, subjects:['Logística de Producción','Seguridad Industrial y de Transporte','Dibujo Asistido por Computador','Bases de Datos']},
@@ -3224,8 +3233,8 @@
 
     const milestones = [
       {icon:'fa-gears', date:'24 mar – 2 abr', title:'Preparación y organización', desc:'Diseño de banco de casos, reglamento, rúbricas, matrices, roles operativos y difusión inicial.', points:['Banco de casos listo','Reglamento validado','Formularios definidos'], status:'current'},
-      {icon:'fa-bullhorn', date:'3 abr – 6 abr', title:'Convocatoria e inscripción', desc:'Difusión oficial e inscripción de grupos del hackathon y posters académicos.', points:['Inicio de registro','Cierre de inscripciones'], status:'next'},
-      {icon:'fa-rocket', date:'7 abr – 8 abr', title:'Lanzamiento y hackathon', desc:'Socialización del evento, reglas, categorías y jornada intensiva de ideación y trabajo inicial.', points:['Lanzamiento oficial','Jornada intensiva'], status:'next'},
+      {icon:'fa-bullhorn', date:'6 abr – 7 abr', title:'Convocatoria e inscripción', desc:'Difusión oficial e inscripción de grupos del hackathon y posters académicos.', points:['Inicio de registro','Cierre de inscripciones'], status:'next'},
+      {icon:'fa-rocket', date:' 8 abr', title:'Lanzamiento hackathon', desc:'Socialización del evento, reglas, categorías y jornada intensiva de ideación y trabajo inicial.', points:['Lanzamiento oficial','Jornada intensiva'], status:'next'},
       {icon:'fa-file-lines', date:'12 abr – 14 abr', title:'Entregas preliminares', desc:'Recepción de documento preliminar, video pitch y proceso de evaluación para seleccionar finalistas.', points:['Entrega preliminar','Selección de finalistas'], status:'next'},
       {icon:'fa-screwdriver-wrench', date:'16 abr – 18 abr', title:'Ajuste de finalistas', desc:'Mejora del documento final, preparación de presentación y consolidación del prototipo o evidencia técnica.', points:['Documento final','Presentación final'], status:'next'},
       {icon:'fa-trophy', date:'20 abr', title:'Expoferia final y premiación', desc:'Desarrollo del evento principal con evaluación final, posters, reconocimientos y clausura institucional.', points:['Expoferia final','Premiación oficial'], status:'next'}
@@ -3353,18 +3362,36 @@
 
     let currentCategory = 'Junior';
     let currentSemesterIndex = 0;
+    let currentAvailabilityFilter = 'all';
 
     function renderSemesterSummary(){
       const el = document.getElementById('semesterSummary');
       if(!el) return;
       const dataset = currentCategory === 'Junior' ? juniorStructure : seniorStructure;
+      const allCases = dataset.flatMap(item => item.estimatedCases ? buildSemesterData().find(d => d.semester === item.semester)?.cases || [] : []);
       const totalCases = dataset.reduce((acc, item) => acc + item.estimatedCases, 0);
-      const totalSubjects = dataset.reduce((acc, item) => acc + item.subjects.length, 0);
+      const availableCases = allCases.filter(item => item.availability === 'available').length;
+      const unavailableCasesCount = allCases.filter(item => item.availability === 'unavailable').length;
       el.innerHTML = `
         <article class="semester-summary-card"><strong>${currentCategory}</strong><span>Categoría activa del banco de retos.</span></article>
-        <article class="semester-summary-card"><strong>${dataset.length}</strong><span>Semestres organizados en la categoría.</span></article>
-        <article class="semester-summary-card"><strong>${totalSubjects}</strong><span>Asignaturas eje visibles.</span></article>
-        <article class="semester-summary-card"><strong>${totalCases}</strong><span>Casos organizados en la estructura actual.</span></article>`;
+        <article class="semester-summary-card"><strong>${totalCases}</strong><span>Total de retos organizados en esta categoría.</span></article>
+        <article class="semester-summary-card"><strong>${availableCases}</strong><span>Retos marcados como disponibles.</span></article>
+        <article class="semester-summary-card"><strong>${unavailableCasesCount}</strong><span>Retos marcados como no disponibles.</span></article>`;
+    }
+
+    function renderAvailabilityFilters(cases){
+      const el = document.getElementById('caseAvailabilityFilters');
+      if(!el) return;
+      const availableCount = cases.filter(item => item.availability === 'available').length;
+      const unavailableCount = cases.filter(item => item.availability === 'unavailable').length;
+      el.innerHTML = `
+        <button class="chip-btn ${currentAvailabilityFilter === 'all' ? 'active' : ''}" data-availability-filter="all"><i class="fas fa-layer-group"></i>Todos (${cases.length})</button>
+        <button class="chip-btn ${currentAvailabilityFilter === 'available' ? 'active' : ''}" data-availability-filter="available"><i class="fas fa-circle-check"></i>Disponibles (${availableCount})</button>
+        <button class="chip-btn ${currentAvailabilityFilter === 'unavailable' ? 'active' : ''}" data-availability-filter="unavailable"><i class="fas fa-circle-xmark"></i>No disponibles (${unavailableCount})</button>`;
+      el.querySelectorAll('[data-availability-filter]').forEach(btn => btn.addEventListener('click', () => {
+        currentAvailabilityFilter = btn.dataset.availabilityFilter;
+        renderChallenges();
+      }));
     }
 
     function openChallenge(item){
@@ -3405,6 +3432,9 @@
     function renderSemesterPanel(item){
       const el = document.getElementById('semesterPanel');
       if(!el) return;
+      const filteredCases = currentAvailabilityFilter === 'all'
+        ? item.cases
+        : item.cases.filter(caseItem => caseItem.availability === currentAvailabilityFilter);
       el.innerHTML = `
         <article class="semester-card level-${item.level}">
           <div class="semester-top">
@@ -3416,10 +3446,15 @@
             <div class="case-total"><strong>${item.estimatedCases}</strong><span>Casos</span></div>
           </div>
           <div class="subject-list">${item.subjects.map(subject => `<div class="subject-item"><i class="fas fa-book-open"></i><span>${subject}</span></div>`).join('')}</div>
-          <div class="semester-note">Cada tarjeta muestra el código, el título completo, el sector o cadena priorizada, las asignaturas eje y el prototipo o evidencia clave definidos para ese caso.</div>
-          <div class="semester-cases-grid">${item.cases.map(caseItem => `
+          <div class="semester-note">Cada tarjeta muestra el código, el título completo, el sector o cadena priorizada, las asignaturas eje, el prototipo o evidencia clave y el estado actual del reto. Puede filtrar por disponibles o no disponibles.</div>
+          <div class="semester-cases-grid">${filteredCases.length ? filteredCases.map(caseItem => {
+            const isAvailable = caseItem.availability === 'available';
+            return `
             <article class="case-card-mini">
-              <div class="case-card-top"><span class="case-code-mini"><i class="fas fa-hashtag"></i>${caseItem.c}</span></div>
+              <div class="case-card-top">
+                <span class="case-code-mini"><i class="fas fa-hashtag"></i>${caseItem.c}</span>
+                <span class="case-status-mini ${isAvailable ? 'available' : 'unavailable'}"><i class="fas ${isAvailable ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>${isAvailable ? 'Disponible' : 'No disponible'}</span>
+              </div>
               <h4><span>${caseItem.p}</span></h4>
               <p>${caseItem.sector}</p>
               <div class="case-meta-mini">
@@ -3427,16 +3462,19 @@
                 <div><strong>Prototipo / evidencia clave</strong><span>${caseItem.prototype}</span></div>
               </div>
               <button class="mini-btn" onclick="openChallengeByCode('${caseItem.c}')">Ver detalle del caso</button>
-            </article>`).join('')}</div>
+            </article>`;
+          }).join('') : `<div class="availability-empty">No hay retos que coincidan con el filtro seleccionado en ${item.semester}. Puede cambiar a <strong>Todos</strong> o revisar otra disponibilidad.</div>`}</div>
         </article>`;
     }
 
     function renderChallenges(){
       const dataset = buildSemesterData();
       if(currentSemesterIndex >= dataset.length) currentSemesterIndex = 0;
+      const currentSemester = dataset[currentSemesterIndex];
       renderSemesterSummary();
       renderSemesterTabs(dataset);
-      renderSemesterPanel(dataset[currentSemesterIndex]);
+      renderAvailabilityFilters(currentSemester.cases);
+      renderSemesterPanel(currentSemester);
     }
     document.querySelectorAll('[data-casecat]').forEach(btn => btn.addEventListener('click', () => {
       document.querySelectorAll('[data-casecat]').forEach(b => b.classList.remove('active'));
