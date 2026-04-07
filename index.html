@@ -15,8 +15,8 @@
       --green-800:#0a4a27;
       --green-700:#006633;
       --green-600:#0d8a4c;
-      --gold:#f0c040;
-      --gold-soft:#f8d982;
+      --gold:#FFCE00;
+      --gold-soft:#ffe47a;
       --bg:#f4f7f2;
       --card:#ffffff;
       --text:#132216;
@@ -50,21 +50,22 @@
     .section-title{font-size:clamp(2rem,4vw,3.45rem);letter-spacing:-.05em;margin-bottom:.8rem}
     .section-desc{max-width:900px;color:var(--muted);line-height:1.8;font-size:1rem}
 
-    .btn-primary,.btn-secondary,.btn-outline,.btn-soft,.mini-btn,.chip-btn{
+    .btn-primary,.btn-secondary,.btn-outline,.btn-soft,.mini-btn,.chip-btn,.tab-btn,.semester-tab,.like-btn{
       display:inline-flex;align-items:center;justify-content:center;gap:.65rem;padding:.92rem 1.3rem;border-radius:14px;font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;border:none;cursor:pointer;transition:.28s ease
     }
-    .btn-primary{background:var(--gold);color:var(--green-950);box-shadow:0 12px 26px rgba(240,192,64,.26)}
-    .btn-primary:hover{transform:translateY(-2px);background:#ffd96e}
-    .btn-secondary{background:var(--green-700);color:#fff;box-shadow:0 12px 26px rgba(0,102,51,.18)}
+    .btn-primary{background:#FFCE00;color:var(--green-950);box-shadow:0 12px 26px rgba(255,206,0,.28)}
+    .btn-primary:hover{transform:translateY(-2px);background:#ffe15a}
+    .btn-secondary{background:#006633;color:#fff;box-shadow:0 12px 26px rgba(0,102,51,.18)}
     .btn-secondary:hover{transform:translateY(-2px);background:#015529}
-    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,.24);color:#fff}
-    .btn-outline:hover{background:rgba(255,255,255,.08)}
-    .btn-soft{background:#fff;border:1px solid var(--line);color:var(--green-900)}
-    .btn-soft:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
-    .mini-btn{padding:.72rem 1rem;border-radius:12px;background:var(--green-700);color:#fff;font-size:.84rem}
-    .mini-btn:hover{background:var(--green-900);transform:translateY(-2px)}
-    .chip-btn{padding:.58rem .9rem;border-radius:999px;background:#fff;border:1px solid rgba(0,102,51,.12);color:var(--green-900);font-size:.8rem}
-    .chip-btn.active{background:var(--green-700);color:#fff;border-color:var(--green-700)}
+    .btn-outline{background:transparent;border:1.5px solid #FFCE00;color:#FFCE00}
+    .btn-outline:hover{background:rgba(255,206,0,.12);transform:translateY(-2px)}
+    .btn-soft{background:#fff;border:1px solid rgba(0,102,51,.14);color:#006633}
+    .btn-soft:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft);background:#f7fbf8}
+    .mini-btn{padding:.72rem 1rem;border-radius:12px;background:#006633;color:#fff;font-size:.84rem;box-shadow:0 10px 22px rgba(0,102,51,.16)}
+    .mini-btn:hover{background:#015529;transform:translateY(-2px)}
+    .chip-btn{padding:.58rem .9rem;border-radius:999px;background:#fff;border:1px solid rgba(0,102,51,.16);color:#006633;font-size:.8rem}
+    .chip-btn:hover{transform:translateY(-2px);background:#f7fbf8}
+    .chip-btn.active{background:#006633;color:#fff;border-color:#006633;box-shadow:0 10px 22px rgba(0,102,51,.16)}
 
     .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(4,31,17,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(240,192,64,.12);transition:.24s ease}
     .navbar.scrolled{box-shadow:0 18px 40px rgba(0,0,0,.18)}
@@ -85,12 +86,21 @@
       linear-gradient(140deg, #04170e 0%, #07532c 44%, #097a40 100%);overflow:hidden}
     .hero:before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);background-size:56px 56px;mask-image:radial-gradient(circle at center, black 40%, transparent 82%);pointer-events:none}
     .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:1.5rem;align-items:center;min-height:calc(100vh - 90px)}
-    .hero-copy{color:#fff;padding:2rem 0 3rem;animation:fadeUp .8s ease both}
+    .hero-copy{color:#fff;padding:2rem 0 3rem;animation:fadeUp .8s ease both;display:flex;flex-direction:column;align-items:center;text-align:center}
     .hero-copy h1{font-size:clamp(3rem,6vw,5.9rem);letter-spacing:-.06em;line-height:.94;margin:1.15rem 0 1rem}
     .hero-copy h1 span{display:block;color:var(--gold)}
     .hero-copy p{max-width:700px;color:rgba(255,255,255,.82);line-height:1.82;font-size:1.05rem}
-    .hero-actions{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:1.7rem}
-    .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.52rem .95rem;border-radius:999px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:.84rem;font-weight:700}
+    .theme-central{display:inline-flex;align-items:center;gap:.55rem;padding:.6rem 1rem;border-radius:999px;background:rgba(255,206,0,.12);border:1px solid rgba(255,206,0,.28);color:#fff3b5;font-size:.82rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin:.15rem 0 1rem}
+    .hero-logo-strip{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem;justify-content:center;align-items:stretch}
+    .hero-logo-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;padding:1.15rem 1rem;border-radius:22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(10px);min-width:220px;min-height:190px;text-align:center;flex:0 0 220px}
+    .hero-logo-card img{width:88px;height:88px;object-fit:contain;background:transparent;border-radius:0;padding:0;box-shadow:none;filter:drop-shadow(0 10px 18px rgba(0,0,0,.22))}
+    .hero-logo-card.upec-logo-card img{width:132px;height:132px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.28))}
+    .hero-logo-card.upec-logo-card{background:linear-gradient(135deg,rgba(255,206,0,.12),rgba(255,255,255,.08));border:1px solid rgba(255,206,0,.20)}
+    .hero-logo-mark{width:88px;height:88px;border-radius:18px;background:linear-gradient(135deg,#FFCE00,#ffe47a);display:flex;align-items:center;justify-content:center;color:#006633;font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;flex-shrink:0;box-shadow:0 10px 22px rgba(0,0,0,.14)}
+    .hero-logo-card strong{display:block;font-size:.98rem;color:#fff;line-height:1.3}
+    .hero-logo-card span{display:block;font-size:.8rem;color:rgba(255,255,255,.74);line-height:1.5;max-width:180px}
+    .hero-actions{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:1.7rem;justify-content:center}
+    .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.52rem .95rem;border-radius:999px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:.84rem;font-weight:700;margin-left:auto;margin-right:auto}
     .hero-side{display:grid;gap:1rem;padding:2rem 0 3rem}
     .hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:24px;box-shadow:0 26px 60px rgba(0,0,0,.18);backdrop-filter:blur(14px);padding:1.45rem;color:#fff;animation:fadeUp 1s ease both}
     .hero-panel h3{font-size:1.08rem;color:var(--gold);margin-bottom:.75rem}
@@ -102,6 +112,16 @@
     .hero-stat span{display:block;color:rgba(255,255,255,.68);font-size:.82rem;line-height:1.45}
 
     .announcement-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:-2.4rem;position:relative;z-index:5}
+    .explore-map{margin-top:1.25rem;padding:1.35rem;border-radius:26px;background:linear-gradient(135deg,#ffffff 0%, #f7fbf8 100%);border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft)}
+    .explore-map-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+    .explore-map-head h3{font-size:1.28rem;color:var(--green-950)}
+    .explore-map-head p{max-width:780px;font-size:.92rem;color:var(--muted);line-height:1.7}
+    .explore-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    .explore-step{display:flex;flex-direction:column;gap:.7rem;padding:1rem;border-radius:20px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:0 8px 22px rgba(0,0,0,.04)}
+    .explore-step .icon-box{margin-bottom:0}
+    .explore-step h4{font-size:1rem;color:var(--green-950)}
+    .explore-step p{font-size:.88rem;color:var(--muted);line-height:1.65}
+    .explore-step a{margin-top:auto;align-self:flex-start}
     .ecard{position:relative;overflow:hidden;padding:1.2rem 1.25rem;border-radius:22px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow);transform:translateY(0);transition:.26s ease;animation:fadeUp 1s ease both}
     .ecard:hover{transform:translateY(-5px)}
     .ecard:before{content:'';position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shine 4s linear infinite}
@@ -133,8 +153,9 @@
     .status-item span{display:block;font-size:.82rem;color:rgba(255,255,255,.68);line-height:1.45}
 
     .tabs{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.35rem}
-    .tab-btn{border:1px solid rgba(0,102,51,.12);background:#fff;color:var(--green-950);border-radius:14px;padding:.82rem 1.05rem;font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:.24s ease}
-    .tab-btn.active{background:var(--green-700);color:#fff;border-color:var(--green-700);box-shadow:0 12px 26px rgba(0,102,51,.16)}
+    .tab-btn{border:1px solid rgba(0,102,51,.16);background:#fff;color:#006633;border-radius:14px;padding:.82rem 1.05rem;font-size:.88rem}
+    .tab-btn:hover{transform:translateY(-2px);background:#f7fbf8}
+    .tab-btn.active{background:#006633;color:#fff;border-color:#006633;box-shadow:0 12px 26px rgba(0,102,51,.16)}
     .tab-panel{display:none}.tab-panel.active{display:block}
 
     .grid-2{display:grid;grid-template-columns:1.08fr .92fr;gap:1.25rem;align-items:start}
@@ -250,9 +271,9 @@
     .semester-summary-card strong{display:block;font-family:'Syne',sans-serif;font-size:1.55rem;color:var(--green-900);margin-bottom:.2rem}
     .semester-summary-card span{display:block;font-size:.84rem;color:var(--muted);line-height:1.5}
     .semester-selector{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.1rem}
-    .semester-tab{display:inline-flex;align-items:center;gap:.5rem;padding:.82rem 1rem;border-radius:14px;background:#fff;border:1px solid rgba(0,102,51,.12);color:var(--green-950);font-family:'Syne',sans-serif;font-size:.86rem;font-weight:700;cursor:pointer;transition:.24s ease}
-    .semester-tab:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
-    .semester-tab.active{background:var(--green-700);color:#fff;border-color:var(--green-700);box-shadow:0 12px 26px rgba(0,102,51,.16)}
+    .semester-tab{display:inline-flex;align-items:center;gap:.5rem;padding:.82rem 1rem;border-radius:14px;background:#fff;border:1px solid rgba(0,102,51,.16);color:#006633;font-size:.86rem}
+    .semester-tab:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft);background:#f7fbf8}
+    .semester-tab.active{background:#006633;color:#fff;border-color:#006633;box-shadow:0 12px 26px rgba(0,102,51,.16)}
     .semester-panel{display:grid;grid-template-columns:1fr;gap:1rem}
     .semester-card{display:flex;flex-direction:column;height:100%;padding:1.35rem 1.35rem 1.2rem;border-radius:24px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
     .semester-card:before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--green-700),var(--gold))}
@@ -281,6 +302,50 @@
     .availability-filter-wrap{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1rem}
     .availability-filter-wrap .chip-btn{box-shadow:none}
     .availability-empty{padding:1.2rem;border-radius:18px;background:var(--soft);border:1px dashed var(--line);color:var(--muted);font-size:.92rem;line-height:1.7}
+
+    /* Botones del banco de retos */
+    #retos .case-tabs .chip-btn,
+    #retos .availability-filter-wrap .chip-btn,
+    #retos .semester-tab,
+    #retos .case-card-mini .mini-btn{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(0,102,51,.18);
+      background:linear-gradient(135deg, rgba(255,206,0,.10) 0%, rgba(255,255,255,.98) 38%, rgba(0,102,51,.05) 100%);
+      color:#006633;
+      box-shadow:0 10px 24px rgba(0,102,51,.08);
+    }
+    #retos .case-tabs .chip-btn:hover,
+    #retos .availability-filter-wrap .chip-btn:hover,
+    #retos .semester-tab:hover,
+    #retos .case-card-mini .mini-btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,206,0,.55);
+      box-shadow:0 14px 28px rgba(0,102,51,.14);
+      background:linear-gradient(135deg, rgba(255,206,0,.16) 0%, rgba(255,255,255,1) 34%, rgba(0,102,51,.08) 100%);
+    }
+    #retos .case-tabs .chip-btn.active,
+    #retos .availability-filter-wrap .chip-btn.active,
+    #retos .semester-tab.active{
+      background:linear-gradient(135deg, #006633 0%, #0b7a40 58%, #FFCE00 170%);
+      color:#fff;
+      border-color:rgba(255,206,0,.58);
+      box-shadow:0 16px 30px rgba(0,102,51,.18);
+    }
+    #retos .case-tabs .chip-btn.active i,
+    #retos .availability-filter-wrap .chip-btn.active i,
+    #retos .semester-tab.active i{color:#fff3b0}
+    #retos .case-card-mini .mini-btn{
+      background:linear-gradient(135deg, #006633 0%, #0b7a40 62%, #FFCE00 185%);
+      color:#fff;
+      border-color:rgba(255,206,0,.42);
+      box-shadow:0 12px 24px rgba(0,102,51,.18);
+    }
+    #retos .case-card-mini .mini-btn i{color:#fff3b0}
+    #retos .case-card-mini .mini-btn:hover{
+      background:linear-gradient(135deg, #00572b 0%, #0a6d3a 60%, #ffd94d 185%);
+      color:#fff;
+    }
     .case-card-mini h4{font-size:1.08rem;font-weight:800;color:var(--green-900);line-height:1.35;letter-spacing:-.02em}
     .case-card-mini h4 span{display:block;color:var(--green-950)}
     .case-detail-block{display:grid;gap:.85rem;margin-top:1rem}
@@ -320,9 +385,9 @@
     .member-chip{display:inline-flex;align-items:center;gap:.35rem;padding:.36rem .66rem;border-radius:999px;background:var(--soft);border:1px solid var(--line);font-size:.76rem;font-weight:700;color:var(--green-900)}
     .video-action-row{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;justify-content:space-between;margin-top:1rem}
     .video-buttons{display:flex;flex-wrap:wrap;gap:.65rem;align-items:center}
-    .like-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem .95rem;border-radius:12px;border:1px solid rgba(220,53,69,.18);background:#fff;color:#8f2437;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:.24s ease}
-    .like-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
-    .like-btn.liked{background:rgba(220,53,69,.08);border-color:rgba(220,53,69,.28);color:#b4233a;cursor:default}
+    .like-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem .95rem;border-radius:12px;border:1px solid rgba(0,102,51,.18);background:#fff;color:#006633;font-size:.82rem}
+    .like-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft);background:#f7fbf8}
+    .like-btn.liked{background:rgba(255,206,0,.18);border-color:rgba(255,206,0,.45);color:#7a5d00;cursor:default}
     .like-count{display:inline-flex;align-items:center;gap:.3rem;padding:.28rem .48rem;border-radius:999px;background:rgba(220,53,69,.1);font-size:.74rem;font-weight:800}
     .selected-switcher{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1.15rem}
     .category-stage-grid{display:grid;grid-template-columns:1fr;gap:1.3rem}
@@ -413,6 +478,8 @@
     @keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
     @media (max-width:1180px){
+      .explore-steps,.participation-shell{grid-template-columns:1fr 1fr}
+      .hero-logo-card{flex:1 1 calc(33.333% - 1rem)}
       .hero-grid,.grid-2,.phase-wrap,.gallery-grid,.highlight-grid{grid-template-columns:1fr}
       .announcement-grid,.metrics-grid,.cards-4,.resource-grid,.contacts-grid,.result-grid,.premios-grid,.winner-grid,.highlight-mini,.agenda-summary,.semester-summary,.semester-grid{grid-template-columns:1fr 1fr}
       .jury-grid{grid-template-columns:1fr}
@@ -426,6 +493,13 @@
       .agenda-bubble{width:54px;height:54px}
     }
     @media (max-width:860px){
+      .explore-steps,.participation-shell{grid-template-columns:1fr}
+      .hero-logo-card{flex:1 1 calc(50% - 1rem);min-width:unset}
+      .hero-logo-strip{width:100%}
+      .hero-actions .btn-primary,.hero-actions .btn-secondary,.hero-actions .btn-outline{width:100%}
+      .explore-step a,.case-card-mini .mini-btn,.instrument-card .mini-btn,.upload-card .mini-btn,.contact-card .mini-btn{width:100%}
+      .modal-box{padding:1.15rem}
+      .section-head{margin-bottom:2rem}
       .nav-inner{width:calc(100% - .7rem)}
       .brand span{display:none}
       .nav-link{font-size:.76rem;padding:.5rem .65rem}
@@ -436,6 +510,19 @@
       .table-wrap table{min-width:620px}
     }
     @media (max-width:640px){
+      .explore-map{padding:1rem}
+      .explore-map-head h3{font-size:1.08rem}
+      .hero-logo-card{flex:1 1 100%;min-height:auto;padding:1rem .9rem}
+      .hero-logo-card img,.hero-logo-mark{width:76px;height:76px}
+      .hero-logo-card.upec-logo-card img{width:112px;height:112px}
+      .pill,.theme-central{max-width:100%;text-align:center}
+      .milestone-row,.agenda-flow,.highlight-start,.participation-register,.team-guide-card,.upload-card,.video-card,.winner-card,.jury-card{border-radius:20px}
+      .modal-box{border-radius:20px;padding:1rem}
+      .modal-content h3{font-size:1.35rem}
+      .semester-top,.subsection-head,.explore-map-head{align-items:flex-start}
+      .case-total{min-width:78px}
+      .section-title{line-height:1.02}
+      .semester-note,.table-note,.participation-note{font-size:.82rem;line-height:1.6}
       .container{width:min(1320px,calc(100% - 1.2rem))}
       .section{padding:4rem 0}
       .hero-copy h1{font-size:2.8rem}
@@ -478,10 +565,34 @@
     <div class="container hero-grid">
       <div class="hero-copy">
         <span class="pill"><i class="fas fa-calendar-star"></i> Lunes 20 de abril de 2026 · Evento final oficial · UPEC, Tulcán</span>
+        <div class="theme-central"><i class="fas fa-leaf"></i>Tema central: Innovación Logística y Sostenibilidad</div>
         <h1>Expo Logística <span>y Transporte UPEC 2026</span></h1>
         <p>
           Hackathon académico y expoferia institucional para el desarrollo, presentación y evaluación de soluciones logísticas, propuestas de valor y trabajos académicos aplicados. El evento articula aprendizaje práctico, tecnologías 4.0, evaluación estructurada, posters académicos y memoria institucional.
         </p>
+        <div class="hero-logo-strip" aria-label="Identidad institucional del evento">
+          <div class="hero-logo-card">
+            <div class="hero-logo-mark">LT</div>
+            <div>
+              <strong>Carrera de Logística y Transporte</strong>
+              <span>Identidad académica de la carrera</span>
+            </div>
+          </div>
+          <div class="hero-logo-card upec-logo-card">
+            <img src="https://upec.edu.ec/wp-content/uploads/elementor/thumbs/Logo_Principal-ralkdxwwqpf92usicbhhmi8nhirkosn4z9l4t7nyda.png" alt="Logo de la Universidad UPEC">
+            <div>
+              <strong>Universidad Politécnica Estatal del Carchi</strong>
+              <span>Identidad institucional UPEC</span>
+            </div>
+          </div>
+          <div class="hero-logo-card">
+            <div class="hero-logo-mark">ITC</div>
+            <div>
+              <strong>Innovación y Transferencia del Conocimiento</strong>
+              <span>Unidad que acompaña innovación y transferencia</span>
+            </div>
+          </div>
+        </div>
         <div class="hero-actions">
           <a href="#participa" class="btn-primary"><i class="fas fa-gift"></i>Participar y ganar</a>
           <a href="#retos" class="btn-secondary"><i class="fas fa-puzzle-piece"></i>Ver retos</a>
@@ -521,6 +632,44 @@
       <h3>Publicación secuencial de resultados</h3>
       <p>El sitio integra consolidado de grupos, finalistas por categoría, ganadores oficiales y reconocimientos institucionales.</p>
     </article>
+  </section>
+
+  <section class="container" aria-label="Ruta de exploración del sitio">
+    <div class="explore-map">
+      <div class="explore-map-head">
+        <div>
+          <div class="eyebrow">Ruta sugerida de exploración</div>
+          <h3>Cómo recorrer el sitio y encontrar rápidamente la información clave</h3>
+        </div>
+        <p>El sitio está organizado para que cualquier usuario pueda avanzar en un orden claro: primero comprender el evento, luego revisar beneficios, fechas, retos, formularios y finalmente consultar resultados, jurados, galería y canales oficiales.</p>
+      </div>
+      <div class="explore-steps">
+        <article class="explore-step">
+          <div class="icon-box"><i class="fas fa-circle-info"></i></div>
+          <h4>1. Comprender el evento</h4>
+          <p>Inicie con la presentación general, el propósito del evento y los beneficios de participación para ubicar el sentido académico e institucional de la Expoferia.</p>
+          <a href="#evento" class="mini-btn"><i class="fas fa-arrow-right"></i>Ir al evento</a>
+        </article>
+        <article class="explore-step">
+          <div class="icon-box"><i class="fas fa-calendar-days"></i></div>
+          <h4>2. Revisar fechas y dinámica</h4>
+          <p>Consulte la ruta general y la agenda del 20 de abril para identificar hitos, entregas, evaluaciones y momentos clave de la jornada final.</p>
+          <a href="#cronograma-general" class="mini-btn"><i class="fas fa-arrow-right"></i>Ver cronograma</a>
+        </article>
+        <article class="explore-step">
+          <div class="icon-box"><i class="fas fa-folder-open"></i></div>
+          <h4>3. Elegir reto y registrarse</h4>
+          <p>Explore el banco de retos por categoría y semestre, revise cómo se conforman los equipos y utilice los formularios oficiales para registrarse y entregar materiales.</p>
+          <a href="#retos" class="mini-btn"><i class="fas fa-arrow-right"></i>Explorar retos</a>
+        </article>
+        <article class="explore-step">
+          <div class="icon-box"><i class="fas fa-square-poll-vertical"></i></div>
+          <h4>4. Hacer seguimiento al evento</h4>
+          <p>Use las secciones de resultados, ganadores, jurados, galería y contacto para seguir la trazabilidad del evento y consultar la publicación institucional.</p>
+          <a href="#consolidado" class="mini-btn"><i class="fas fa-arrow-right"></i>Ver seguimiento</a>
+        </article>
+      </div>
+    </div>
   </section>
 
   <section class="section" id="evento">
@@ -796,7 +945,7 @@
         <div>
           <div class="eyebrow">Recursos e instrumentos</div>
           <h2 class="section-title">Formularios, rúbricas y documentos base</h2>
-          <p class="section-desc">Se conservan visibles los instrumentos oficiales para inscripción, entrega, evaluación y consulta de criterios del evento.</p>
+          <p class="section-desc">Esta sección concentra los instrumentos oficiales que los participantes, jurados y organizadores deben consultar para registrar equipos, cargar entregables y revisar los criterios de evaluación del evento.</p>
         </div>
       </div>
       <div class="resource-grid">
@@ -846,7 +995,7 @@
         <div>
           <div class="eyebrow">Resultados · Etapa 1</div>
           <h2 class="section-title">Consolidado inicial de grupos inscritos por categoría y semestre</h2>
-          <p class="section-desc">Se dejan las tablas preparadas para ingresar posteriormente la información de grupos, asignación, estado y seguimiento por bloque académico.</p>
+          <p class="section-desc">Aquí se publicará el consolidado inicial de grupos inscritos. La tabla se organiza para visualizar el código, el nombre del equipo, el reto asignado, el prototipo o evidencia clave, los cinco integrantes del grupo y una observación que permita verificar si el registro fue completado correctamente.</p>
         </div>
       </div>
       <div class="results-stage-shell">
@@ -858,18 +1007,17 @@
           <div class="semester-selector" id="stage1SemesterTabs"></div>
         </div>
         <div class="semester-summary" id="stage1Summary"></div>
-        <div class="table-note">Tabla base para registro inicial de equipos, asignación de casos y seguimiento del estado general por semestre.</div>
+        <div class="table-note">Tabla base para consolidar la inscripción inicial de equipos por categoría y semestre, dejando visible el nombre del equipo, el reto, la evidencia clave, los cinco integrantes y la observación sobre el estado de completitud del registro.</div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Código</th>
-                <th>Equipo</th>
-                <th>Semestre</th>
-                <th>Caso asignado</th>
+                <th>Nombre del equipo</th>
+                <th>Nombre del reto</th>
                 <th>Prototipo / evidencia clave</th>
-                <th>Estado del caso</th>
-                <th>Estado del grupo</th>
+                <th>Equipo de trabajo</th>
+                <th>Observación</th>
               </tr>
             </thead>
             <tbody id="stage1TableBody"></tbody>
@@ -885,7 +1033,7 @@
         <div>
           <div class="eyebrow">Entrega preliminar</div>
           <h2 class="section-title">Carga de documento y video pitch para revisión del jurado</h2>
-          <p class="section-desc">Bloque destinado a la recepción de documento preliminar y video pitch, insumos base para la evaluación de la etapa 2.</p>
+          <p class="section-desc">En esta sección los equipos encontrarán el punto oficial para entregar el documento preliminar y el video pitch, materiales que sirven de base para la evaluación previa a la selección de finalistas.</p>
         </div>
       </div>
       <div class="upload-grid">
@@ -917,7 +1065,7 @@
         <div>
           <div class="eyebrow">Resultados · Etapa 2</div>
           <h2 class="section-title">Consolidado preliminar y espacios para finalistas</h2>
-          <p class="section-desc">Se deja el consolidado listo para ingresar los puntajes de la evaluación preliminar y los espacios de finalistas con visor de video pendiente de publicación.</p>
+          <p class="section-desc">Aquí se mostrará el consolidado de evaluación preliminar y, posteriormente, la publicación de los equipos finalistas Junior y Senior con sus materiales de apoyo y video pitch.</p>
         </div>
       </div>
       <div class="results-stage-shell">
@@ -968,7 +1116,7 @@
         <div>
           <div class="eyebrow">Entrega final</div>
           <h2 class="section-title">Entrega de documento final, diapositivas y materiales de defensa</h2>
-          <p class="section-desc">Se mantiene el bloque de entrega final para la carga posterior de documento completo, diapositivas y materiales que serán evaluados en la etapa 3.</p>
+          <p class="section-desc">Esta sección está destinada a la carga final de documentos, presentación y materiales de defensa por parte de los equipos seleccionados para la etapa definitiva del evento.</p>
         </div>
       </div>
       <div class="upload-grid">
@@ -1000,7 +1148,7 @@
         <div>
           <div class="eyebrow">Resultados · Etapa 3</div>
           <h2 class="section-title">Tabla preparada para resultados finales</h2>
-          <p class="section-desc">Se deja la estructura de resultados finales con tablas listas para ingresar puntajes y estados definitivos por categoría.</p>
+          <p class="section-desc">Aquí se consolidarán los puntajes finales y el estado definitivo de los equipos Junior, Senior y de los posters académicos una vez concluida la evaluación final.</p>
         </div>
       </div>
       <div class="results-stage-shell">
@@ -1051,7 +1199,7 @@
     <div class="container">
       <div class="section-head">
         <div>
-          <div class="eyebrow">Resultados · Etapa 5</div>
+          <div class="eyebrow">Reconocimientos institucionales</div>
           <h2 class="section-title">Reconocimientos oficiales</h2>
           <p class="section-desc">
             Reconocimientos institucionales previstos para la premiación final del evento, organizados por categoría y modalidad académica. Esta sección coincide con la estructura de proyectos y posters premiados mostrada en las etapas anteriores.
@@ -1090,9 +1238,7 @@
         <div>
           <div class="eyebrow">Galería del evento</div>
           <h2 class="section-title">Cobertura visual y audiovisual</h2>
-          <p class="section-desc">
-            Espacio institucional para video, memoria fotográfica del montaje, evaluación, posters, premiación y fotografía oficial de clausura. Esta sección fortalece la visibilidad del evento y deja registro de la edición 2026.
-          </p>
+          <p class="section-desc">Esta galería reúne el registro audiovisual del evento: montaje, evaluación, posters, premiación y cierre institucional. Su propósito es dejar memoria visible de la edición 2026 y facilitar la difusión posterior.</p>
         </div>
       </div>
 
@@ -3233,8 +3379,8 @@
 
     const milestones = [
       {icon:'fa-gears', date:'24 mar – 2 abr', title:'Preparación y organización', desc:'Diseño de banco de casos, reglamento, rúbricas, matrices, roles operativos y difusión inicial.', points:['Banco de casos listo','Reglamento validado','Formularios definidos'], status:'current'},
-      {icon:'fa-bullhorn', date:'6 abr – 7 abr', title:'Convocatoria e inscripción', desc:'Difusión oficial e inscripción de grupos del hackathon y posters académicos.', points:['Inicio de registro','Cierre de inscripciones'], status:'next'},
-      {icon:'fa-rocket', date:' 8 abr', title:'Lanzamiento hackathon', desc:'Socialización del evento, reglas, categorías y jornada intensiva de ideación y trabajo inicial.', points:['Lanzamiento oficial','Jornada intensiva'], status:'next'},
+      {icon:'fa-bullhorn', date:'3 abr – 6 abr', title:'Convocatoria e inscripción', desc:'Difusión oficial e inscripción de grupos del hackathon y posters académicos.', points:['Inicio de registro','Cierre de inscripciones'], status:'next'},
+      {icon:'fa-rocket', date:'7 abr – 8 abr', title:'Lanzamiento y hackathon', desc:'Socialización del evento, reglas, categorías y jornada intensiva de ideación y trabajo inicial.', points:['Lanzamiento oficial','Jornada intensiva'], status:'next'},
       {icon:'fa-file-lines', date:'12 abr – 14 abr', title:'Entregas preliminares', desc:'Recepción de documento preliminar, video pitch y proceso de evaluación para seleccionar finalistas.', points:['Entrega preliminar','Selección de finalistas'], status:'next'},
       {icon:'fa-screwdriver-wrench', date:'16 abr – 18 abr', title:'Ajuste de finalistas', desc:'Mejora del documento final, preparación de presentación y consolidación del prototipo o evidencia técnica.', points:['Documento final','Presentación final'], status:'next'},
       {icon:'fa-trophy', date:'20 abr', title:'Expoferia final y premiación', desc:'Desarrollo del evento principal con evaluación final, posters, reconocimientos y clausura institucional.', points:['Expoferia final','Premiación oficial'], status:'next'}
@@ -3507,15 +3653,14 @@
         <article class="semester-summary-card"><strong>${currentSemester.semester}</strong><span>Semestre activo para registro.</span></article>
         <article class="semester-summary-card"><strong>${currentSemester.cases.length}</strong><span>Filas preparadas para carga posterior.</span></article>
         <article class="semester-summary-card"><strong>${currentSemester.subjects.length}</strong><span>Asignaturas eje visibles en el bloque.</span></article>`;
-      bodyEl.innerHTML = currentSemester.cases.map(item => `
+      bodyEl.innerHTML = currentSemester.cases.map((item, index) => `
         <tr>
           <td><span class="table-tag">${item.c}</span></td>
-          <td>Por ingresar</td>
-          <td>${currentSemester.semester}</td>
+          <td>${stage1Category === 'Junior' ? 'Equipo Junior' : 'Equipo Senior'} ${String(index + 1).padStart(2,'0')}</td>
           <td>${item.p}</td>
           <td>${item.prototype}</td>
-          <td>Por asignar</td>
-          <td>Pendiente</td>
+          <td>Integrante 1, Integrante 2, Integrante 3, Integrante 4, Integrante 5</td>
+          <td>Pendiente de verificar si el registro del grupo fue completado correctamente.</td>
         </tr>`).join('');
       document.querySelectorAll('[data-stage1semester]').forEach(btn => btn.addEventListener('click', () => { stage1SemesterIndex = Number(btn.dataset.stage1semester); renderStage1(); }));
     }
