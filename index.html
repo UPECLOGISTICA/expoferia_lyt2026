@@ -390,6 +390,16 @@
     .like-btn.liked{background:rgba(255,206,0,.18);border-color:rgba(255,206,0,.45);color:#7a5d00;cursor:default}
     .like-count{display:inline-flex;align-items:center;gap:.3rem;padding:.28rem .48rem;border-radius:999px;background:rgba(220,53,69,.1);font-size:.74rem;font-weight:800}
     .selected-switcher{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1.15rem}
+    .finalists-list-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .finalist-list-card{padding:1.25rem;border-radius:24px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:.8rem}
+    .finalist-list-card:before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--green-700),var(--gold))}
+    .finalist-topline{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+    .finalist-rank{display:inline-flex;align-items:center;gap:.45rem;padding:.36rem .72rem;border-radius:999px;background:rgba(240,192,64,.18);color:#7a5d00;font-size:.74rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+    .finalist-score{display:inline-flex;align-items:center;gap:.45rem;padding:.36rem .72rem;border-radius:999px;background:rgba(0,102,51,.10);color:var(--green-700);font-size:.74rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+    .finalist-list-card h3{font-size:1.02rem;color:var(--green-950);line-height:1.45}
+    .finalist-list-card p{font-size:.9rem;color:var(--muted);line-height:1.72}
+    .finalist-meta{display:flex;flex-wrap:wrap;gap:.6rem}
+    .finalist-meta span{display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .68rem;border-radius:999px;background:var(--soft);border:1px solid var(--line);font-size:.76rem;font-weight:700;color:var(--green-900)}
     .category-stage-grid{display:grid;grid-template-columns:1fr;gap:1.3rem}
     .category-stage-block{padding:1.25rem;border-radius:24px;background:#fff;border:1px solid rgba(0,102,51,.08);box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
     .category-stage-block:before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--green-700),var(--gold))}
@@ -505,7 +515,7 @@
       .nav-link{font-size:.76rem;padding:.5rem .65rem}
       .nav-link span{display:none}
       .nav-cta{display:none}
-      .status-grid,.announcement-grid,.metrics-grid,.cards-4,.resource-grid,.contacts-grid,.result-grid,.hero-stat-grid,.trace-grid,.modal-grid,.challenge-meta,.winner-grid,.challenge-grid,.highlight-mini,.agenda-summary,.premios-grid,.semester-summary,.semester-cases-grid,.upload-grid,.selected-video-grid,.winner-category-grid{grid-template-columns:1fr}
+      .status-grid,.announcement-grid,.metrics-grid,.cards-4,.resource-grid,.contacts-grid,.result-grid,.hero-stat-grid,.trace-grid,.modal-grid,.challenge-meta,.winner-grid,.challenge-grid,.highlight-mini,.agenda-summary,.premios-grid,.semester-summary,.semester-cases-grid,.upload-grid,.selected-video-grid,.winner-category-grid,.finalists-list-grid{grid-template-columns:1fr}
       .milestone-row{grid-template-columns:1fr}
       .table-wrap table{min-width:620px}
     }
@@ -1064,8 +1074,8 @@
       <div class="section-head">
         <div>
           <div class="eyebrow">Resultados · Etapa 2</div>
-          <h2 class="section-title">Consolidado preliminar y espacios para finalistas</h2>
-          <p class="section-desc">Aquí se mostrará el consolidado de evaluación preliminar y, posteriormente, la publicación de los equipos finalistas Junior y Senior con sus materiales de apoyo y video pitch.</p>
+          <h2 class="section-title">Consolidado preliminar y finalistas seleccionados</h2>
+          <p class="section-desc">En esta etapa se presenta primero el consolidado preliminar de evaluación por categoría, con jurados asignados, puntajes individuales, promedio final y posición alcanzada por cada reto. Luego se publica el Top 10 de finalistas Junior y Senior.</p>
         </div>
       </div>
       <div class="results-stage-shell">
@@ -1076,18 +1086,20 @@
           </div>
         </div>
         <div class="semester-summary" id="stage2Summary"></div>
-        <div class="table-note">Tabla base para consolidar puntajes, estado de entrega y selección de finalistas por categoría.</div>
+        <div class="table-note">Consolidado preliminar de evaluación cargado por categoría. La tabla muestra jurados asignados, puntajes otorgados por cada jurado, promedio final y posición general alcanzada por cada reto en la etapa preliminar.</div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Código</th>
-                <th>Equipo</th>
-                <th>Semestre</th>
-                <th>Puntaje preliminar</th>
-                <th>Documento</th>
-                <th>Video pitch</th>
-                <th>Estado</th>
+                <th>Jurado 1</th>
+                <th>Jurado 2</th>
+                <th>Jurado 3</th>
+                <th>Puntaje jurado 1</th>
+                <th>Puntaje jurado 2</th>
+                <th>Puntaje jurado 3</th>
+                <th>Promedio final</th>
+                <th>Posición</th>
               </tr>
             </thead>
             <tbody id="stage2TableBody"></tbody>
@@ -1097,9 +1109,9 @@
 
       <div class="section-head" style="margin-top:2.3rem;">
         <div>
-          <div class="eyebrow">Equipos seleccionados</div>
-          <h2 class="section-title" style="font-size:clamp(1.8rem,3vw,2.45rem);">Espacios reservados para finalistas</h2>
-          <p class="section-desc">Se dejan visibles los espacios de finalistas Junior y Senior para cargar posteriormente los equipos seleccionados, sus integrantes y el visor de video enviado por cada grupo.</p>
+          <div class="eyebrow">Finalistas seleccionados</div>
+          <h2 class="section-title" style="font-size:clamp(1.8rem,3vw,2.45rem);">Top 10 por categoría</h2>
+          <p class="section-desc">Se muestran los equipos o proyectos finalistas seleccionados para la fase definitiva del evento. La visualización se organiza por categoría para facilitar la consulta rápida de posiciones, códigos, nombres del proyecto y puntaje final obtenido en la etapa preliminar.</p>
         </div>
       </div>
       <div class="selected-switcher" id="selectedCategoryTabs">
@@ -1147,8 +1159,8 @@
       <div class="section-head">
         <div>
           <div class="eyebrow">Resultados · Etapa 3</div>
-          <h2 class="section-title">Tabla preparada para resultados finales</h2>
-          <p class="section-desc">Aquí se consolidarán los puntajes finales y el estado definitivo de los equipos Junior, Senior y de los posters académicos una vez concluida la evaluación final.</p>
+          <h2 class="section-title">Equipos clasificados a la gran final del 20 de abril</h2>
+          <p class="section-desc">En esta etapa se publican los equipos finalistas que avanzan oficialmente a la jornada definitiva de la Expoferia. Estos proyectos deberán preparar su documento final, presentación, prototipo o evidencia técnica y defensa ante jurados para el día lunes 20 de abril de 2026.</p>
         </div>
       </div>
       <div class="results-stage-shell">
@@ -1156,21 +1168,18 @@
           <div class="final-tabs">
             <button class="chip-btn active" data-stage3cat="Junior">Junior</button>
             <button class="chip-btn" data-stage3cat="Senior">Senior</button>
-            <button class="chip-btn" data-stage3cat="Posters">Posters</button>
           </div>
         </div>
         <div class="semester-summary" id="stage3Summary"></div>
-        <div class="table-note">Tabla base para consolidar documento final, defensa, materiales y puntaje definitivo de la etapa final.</div>
+        <div class="table-note">Listado oficial de equipos clasificados a la gran final. La tabla resume posición, código, nombre del proyecto y puntaje final obtenido en la etapa previa de selección.</div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
+                <th>Pos.</th>
                 <th>Código</th>
-                <th>Equipo / participante</th>
+                <th>Nombre del proyecto</th>
                 <th>Puntaje final</th>
-                <th>Documento final</th>
-                <th>Diapositivas / material</th>
-                <th>Estado final</th>
               </tr>
             </thead>
             <tbody id="stage3TableBody"></tbody>
@@ -3363,6 +3372,13 @@
       {recognition:'Segundo reconocimiento Poster', category:'Posters'}
     ];
 
+    const stage1ExcelRegistry = [{"code":"J2-01","category":"Junior","semester":"Semestre 2","title":"Ruta Verde de la Leche: red de acopio inteligente y transporte colaborativo para pequeños productores del Carchi","members":["Ariana Gisell Valenzuela Mejia","Alina Anyelit Delgado Villareal","Ariana Melisa Anchundia Bedón","Tamara Carolina Tigsi Estrada","Ipiales Cachimuel Elvis Francisco"]},{"code":"J2-02","category":"Junior","semester":"Semestre 2","title":"Frío Seguro para Embutidos: sistema básico de aprovisionamiento térmico y distribución primaria para transformadores cárnicos locales","members":["Angeline Jezabel Córdova Gómez","Marjorie Anabel López Pastaz","Aracelly Elizabeth Salazar Vallejo","Alison Mayerli Táquez Mirama","Gabriela Cristina Villarreal Romo"]},{"code":"J2-03","category":"Junior","semester":"Semestre 2","title":"Harina a Tiempo: sistema de aprovisionamiento y reparto urbano para panificación regional","members":["BYRON ANDRES ENRIQUEZ MUÑOZ","KATERIN ISABELA JIMENEZ BENAVIDES","MARIA JOSE ORTEGA GARCIA","KARELYS MISHELL SIMBAÑA DOMINGUEZ","DEIVID SANTIAGO BURBANO CRIOLLO"]},{"code":"J2-04","category":"Junior","semester":"Semestre 2","title":"Fruta sin Golpes: diseño de empaque y transporte para frutas de valor agregado del Carchi","members":["Rosero Pinchao Luis Miguel","Toapanta Paspuel Jair Alexander","Anderson Ribaldo Farinango Aules","Achiña Alajo Alisson Gabriela","Valenzuela Cuastumal Jonathan Alexis","Luis David Martinez Guama"]},{"code":"J2-05","category":"Junior","semester":"Semestre 2","title":"Cosecha a Proceso: coordinación just in time para vegetales frescos y de cuarta gama","members":["Cindy Adamaris Meneses Reascos","Fabian Alexander Mejia Fuentes","Deysi Nayeli Cuascota Castillo","Evelin Paulina Cuascota Cabascango","Alex Javier Irua Soto","Ronny David Rosero Andrade"]},{"code":"J2-06","category":"Junior","semester":"Semestre 2","title":"Tubérculo a Planta, Alcohol Seguro: abastecimiento agrícola y transporte controlado para almidones y licores","members":["Alison Rubi Tulcán Abalco","Arley sebastian Chamorro Villareal","Fanny Claris Quishpe Tuquerres","Karla Vanessa Castillo Chitan","Kerly Dayana Cholca Catuguamba","Janeth Susana Hidalgo Robalino"]},{"code":"J2-07","category":"Junior","semester":"Semestre 2","title":"Recepción sin Atascos: mejora del flujo logístico de ingreso y salida en microplantas agroindustriales","members":["Dylan Jared Quishpe Cabascango","Heidi Pamela Erazo Moreno","Julio David Noguera Pantoja"]},{"code":"J2-08","category":"Junior","semester":"Semestre 2","title":"Carga Especial sin Riesgos: solución logística para movilización de mercancías sobredimensionadas o delicadas","members":["Genesis Mishell Apolo Almeida","Estefania Salomé Burbano Fuel","Josthyn Mateo Gramal Cotacachi","Jennifer Aracely Ovato Estrada","Ulisess Yahir Pazmiño Jacho"]},{"code":"J2-09","category":"Junior","semester":"Semestre 2","title":"Microcentro Fronterizo: abastecimiento y distribución de productos regionales en ciudades de frontera","members":["Fueltala Espinoza Jhosua Alexander","Guevara Guevara Marco Steven","Rosero Puetate Carla Milena","Escobar Obando Scarleth Samantha","Delgado Montenegro Brenda Ayelen"]},{"code":"J2-10","category":"Junior","semester":"Semestre 2","title":"Obra sin Faltantes: abastecimiento y transporte escalonado para infraestructura productiva local","members":["Nallely Yomaira Benavides Gutierrez","Johan Esteban Mera Reina","Helen Mayerli Riascos Muñoz","Cristopher Matias Rueda Pérez"]},{"code":"J2-11","category":"Junior","semester":"Semestre 2","title":"Tubérculo a Planta, Alcohol Seguro: abastecimiento agrícola y transporte controlado para almidones y licores","members":["Marvin Ariel Cuestas Cuaran","Brenda Tamara Hernandez Moran","Jeily Samira Hurtado Peñafiel","Carla Mishelle Guerron Morillo"]},{"code":"J3-01","category":"Junior","semester":"Semestre 3","title":"Sistema de Control de Producción, Trazabilidad Digital y Rediseño de Layout para Derivados Lácteos del Carchi","members":["CHAVEZ  MARTINEZ STEVEN JOSE","OBANDO CISNEROS MELANY ANAHI","SISA ANRANGO ALEXIS JORDAN","VIVEROS MENDEZ JORDIN JHAIR","VACA BRAVO DAYANARA SCARLET"]},{"code":"J3-03","category":"Junior","semester":"Semestre 3","title":"Gemelo Operativo para Vegetales de Cuarta Gama: Layout de Proceso, Modelado 3D y Base de Datos de Frescura y Lotes","members":["ROBERTH ALEXIS BUITRÓN BUITRÓN","LEANDRO DAMIAN TULCAN PASPUEL","MARCELO ANDRÉS CHALACÁN REVELO","WILMER ARIEL GUAGA NASTACUAZ","CUASPA REVELO JHON SEBASTIAN"]},{"code":"J3-04","category":"Junior","semester":"Semestre 3","title":"Arquitectura de Datos y Rediseño Seguro de Estaciones para la Producción de Almidones y Licores","members":["Alison lisbeth Fueltala Piarpuezan","Evelyn Damaris Martinez Quilismal","Kelvin Yeltsin Rodriguez Guanotoa","Kevin Alexis Jaramillo Guevara"]},{"code":"J3-05","category":"Junior","semester":"Semestre 3","title":"Panificación Inteligente: Diseño de Línea, Producto y Base de Datos para una Producción Continua y Segura","members":["Keyla Darlyn Chiluisa Naranjo","Silvia Valeria Manobanda Ceron","Katheryn Maylin Cumbal Narvaéz","Fernando Santiago Villarreal Guamialamà","Esteban Renan Estacio Ponce"]},{"code":"J4-02","category":"Junior","semester":"Semestre 4","title":"Rediseño de Almacenes y Reparto Urbano Eficiente para Panificación Regional","members":["Duarte Herrera Erick Sebastian","Chingal Figueroa Carlos IsraeL","López Tulcán Karina Esmeralda","Pérez Piarpuezan Jefferson Andy","Tobar Moncayo Leandro Alexander"]},{"code":"J4-03","category":"Junior","semester":"Semestre 4","title":"Trazabilidad de Inventarios Cárnicos y Optimización de Fletes Refrigerados con ERP y Analítica","members":["Changuan Reina Santiago David","Chamba Canacuan Diego Stiven","Almeida Castillo Michael David","Chitan Morales Gabriela Estefania"]},{"code":"J4-05","category":"Junior","semester":"Semestre 4","title":"Centro de Almacenamiento para Almidones y Licores con Control WMS, ERP y Visualización Ejecutiva","members":["Alejandro Sebastian Montenegro Guacales","Heidy Nicol Pozo Pinchao","Vanessa Johanna Rosero Jimenez","Jhonatan Ferney Narvaez Muñoz","Maryorie Marcela Ortega Chandi"]},{"code":"S5-01","category":"Senior","semester":"Semestre 5","title":"Optimización Multiobjetivo y Cumplimiento Legal de la Distribución Láctea en el Carchi","members":["Vanessa Scarlett Arcos Ramirez","Esteban David Taimal Aza","Sheyla Karina Cerón Goméz","Wagner Ricardo Patiño Enriquez","Alexander David Estrada Quishpe","Damaris Marcela Rosero Quishpe"]},{"code":"S5-02","category":"Senior","semester":"Semestre 5","title":"Análisis Estadístico de Mermas y Optimización de la Cadena de Suministro Cárnica Nacional","members":["Mariory Lisbeth Garcia Cuastumal","Andres Sebastian Buesaco Ceron","Estefany Juliette Cuases Guaquez","Gisell Valentina Jativa Pizo","Sadia Solange Pujota Yumbo","Melany Jasmin Guaramag Paguay"]},{"code":"S5-03","category":"Senior","semester":"Semestre 5","title":"Diseño Estratégico de un Centro de Consolidación de Vegetales: Eficiencia Matemática y Marco Legal","members":["Mayanquer Erazo Ronnald Damián","Arciniegas Vásquez Carlos Manuel","Jimenéz Montenegro John Mateo","Gaón Curipoma Génesis Concepción","Conforme Rosero Luis Dagoberto","Mafla Querembas Stalin Joel"]},{"code":"S5-04","category":"Senior","semester":"Semestre 5","title":"Modelado Logístico para la Distribución Física Internacional de Derivados de Almidones y Licores","members":["Paula Andrea Naranjo Fueltala","Miguel Angel Baraja Pineda","Antony Alexis Guamá Velasco","Edwin Aldair Cevalllos Guamá","Carlos Emerson Yaguapaz Recalde","Madelaine Yamileth Escobar Bolaños"]},{"code":"S5-05","category":"Senior","semester":"Semestre 5","title":"Simulación de Operaciones de Última Milla y Riesgo Legal en el Transporte Urbano","members":["Alison Nayeli Cueva Imbacuan","Dorian Gisell Piarpuezan Tenganan","Deyna Gabriela Cabrera Gallo","Lesly Nayeli Cuasatar Riascos","Maileen Amanda Puetate Puarpezan","Karla Amelia Tirira Nazate"]},{"code":"S6-01","category":"Senior","semester":"Semestre 6","title":"Corredor Intermodal Lácteo Inteligente: red probabilística y optimización de exportación desde el Carchi","members":["Melani Jajaira Guamá Cárdenas","Joseph Fernando Benavides Palacios","Tamia Micaela Cuasapaz Guiz","Bryan Steven Morales Cuasquer","Wendy Katherine Chugá Nupán","Lady Karolina Meneses Chalacán"]},{"code":"S6-03","category":"Senior","semester":"Semestre 6","title":"Ventana Intermodal Hortofrutícola: diseño de red y consolidación transfronteriza para frutas y vegetales frescos","members":["Ender Fernando Argoti Guerron","Juver Edison Benavides Goyes","Evelyn Victoria Jaramillo Guachagmira","Dayana Gonzalez","Fernanda Yuleitzy Zambrano Vargas","Christina Dione Ruiz Rojas"]},{"code":"S6-04","category":"Senior","semester":"Semestre 6","title":"Sincronía Papa–Puerto: planificación intermodal y logística colaborativa para almidones y licores","members":["Robles Aguilar Víctor Manuelle","Jhon Lenin Cevallos Álvarez","Carlos Eduardo Mejía Sánchez","Iván Andrés Montenegro Morillo"]},{"code":"S6-05","category":"Senior","semester":"Semestre 6","title":"Gemelo Digital de Última Milla: validación inferencial y optimización de rutas urbanas en ciudades inteligentes","members":["Checa Erika","Pozo Paola","Obando Brayan","Aizaga Brayan"]},{"code":"S6-06","category":"Senior","semester":"Semestre 6","title":"Cadena de Frío Cárnica Bajo Incertidumbre: Optimización de rutas y riesgo logístico con evidencia inferencial","members":["Steven Alexander Cuaspud Meneses","Luis David Paspuel Cuasquer"]},{"code":"S7-02","category":"Senior","semester":"Semestre 7","title":"Centro Regional Reefer: planificación estratégica y simulación de tráfico para la distribución nacional de cárnicos","members":["Ricardo Daniel Ortiz Aguilar","Jennifer Alexandra Calderon Arnero","Madelaine Paola Quemac Cuasapud","Michael Andres Quishpe Erazo","Jordan Alexander Fuentes Agirre"]},{"code":"S7-04","category":"Senior","semester":"Semestre 7","title":"Proyecto Exportador Intermodal de Derivados: cadena de suministro y simulación de despachos para almidones y licores","members":["Anael Vanessa Mueses Ruano","Alexis José Cedeño Inaquiza","Alexis Joel Pucuna Condo","Alexis Paul Ortiz Lucero","María José Calderón Vilañéz"]},{"code":"S7-05","category":"Senior","semester":"Semestre 7","title":"Microhubs Urbanos Rentables: simulación XR y evaluación de proyectos de última milla para ciudades inteligentes","members":["Franklin Giovanny Peralvo Achiña","Cristobal Joel Chilan Hurtado","Magaly Yessenia Cuascota Castillo","Anthony Jhoel Hurtado Flores","Gisela Mayerli Enriquez Jurado"]},{"code":"S8-01","category":"Senior","semester":"Semestre 8","title":"Exportación Láctea con Estándares de Calidad Global: diseño de una DFI inteligente y trazable para derivados lácteos del Carchi","members":["Pablo Alexis Marcillo Cuascota","Gustavo Alexander Fuel de la Cruz","Valeria Elizabeth Tarapues Malte","karen Mishell Játiva Ruano","Jessenia Melani Rosero Esparza","Kely Yadeneira Anrango lopez"]},{"code":"S8-02","category":"Senior","semester":"Semestre 8","title":"Logística Portuaria Reefer para Cárnicos de Alta Gama: control de calidad y administración de operaciones para exportación segura","members":["ERIK STIVEN SALAS PIARPUEZAN","EDGAR ANDRÉS CÁRDENAS RODRÍGUEZ","ALEXIS DANIEL GARCIA CASAPUD","ADRIANA NICOLE YUNAPANTA REVELO","JEFFERSON JAVIER AREVALO PATIÑO"]},{"code":"S8-03","category":"Senior","semester":"Semestre 8","title":"DFI Hortofrutícola Cero Rechazos: ingeniería de calidad y decisión logística para fruta fresca de exportación","members":["Steven Sebastian Cuaspud  Ortega","Erika Daniela Erazo Arteaga","Andres Alejandro Guaman Jaramillo","Jherson Jhair Tanicuchi Obando","Hector Joel Lugmania Cuatis"]},{"code":"S8-04","category":"Senior","semester":"Semestre 8","title":"Administración Internacional de Carga Especializada: DFI segura y controlada para almidones y licores","members":["Oscar Daniel Pinchao Cunalata","Jorge Luis Villarreal Rosales","Johana Lisbeth Armas Salas","Johanna Estefania Puenayan Changuan","Nixon Alexis Morales Rosas"]}];
+
+    const stage1CaseTitleIndex = [...juniorCases, ...seniorCases].reduce((acc, item) => {
+      acc[normalize(item.p)] = item;
+      return acc;
+    }, {});
+
     const modalInfo = {
       naturaleza: {title:'Naturaleza del evento', html:`<p>La Expoferia Logística y Transporte UPEC 2026 posee naturaleza académica y estratégica. Académicamente, fortalece la formación práctica mediante resolución de casos, análisis de problemas, propuestas técnicas y comunicación profesional de resultados. Estratégicamente, se proyecta como hito anual de la carrera y plataforma de innovación aplicada.</p><div class="modal-grid"><div><strong>Modalidad</strong><span>Expoferia + hackathon académico + posters académicos.</span></div><div><strong>Proyección</strong><span>Evento escalable, visible y replicable en futuras ediciones.</span></div></div>`},
       categorias: {title:'Categorías y participación', html:`<p>El hackathon se organiza en dos categorías para garantizar comparabilidad y equidad académica. Los posters académicos constituyen una línea paralela para noveno semestre.</p><ul><li><strong>Junior:</strong> segundo, tercero y cuarto semestre.</li><li><strong>Senior:</strong> quinto, sexto, séptimo y octavo semestre.</li><li><strong>Posters:</strong> noveno semestre, en modalidad individual o grupal según la naturaleza del trabajo.</li><li>Cada equipo del hackathon debe estar conformado por mínimo 3 y máximo 5 estudiantes.</li></ul>`},
@@ -3639,31 +3655,71 @@
 
     let stage1Category = 'Junior';
     let stage1SemesterIndex = 0;
+
+    function stage1Semesters(category){
+      return [...new Set(stage1ExcelRegistry.filter(item => item.category === category).map(item => item.semester))]
+        .sort((a,b) => Number(a.replace(/[^0-9]/g,'')) - Number(b.replace(/[^0-9]/g,'')));
+    }
+
+    function stage1Observation(record){
+      const totalMembers = record.members.length;
+      if(totalMembers === 5) return 'Registro completo con 5 integrantes cargados.';
+      if(totalMembers > 5) return `Registro cargado con ${totalMembers} integrantes; revisar ajuste del equipo.`;
+      if(totalMembers >= 3) return `Registro incompleto para validación final: ${totalMembers} integrantes cargados.`;
+      return `Registro incompleto: ${totalMembers} integrante(s) cargado(s).`;
+    }
+
+    function stage1Prototype(record){
+      const matchedCase = getCaseByCode(record.code) || stage1CaseTitleIndex[normalize(record.title)];
+      return matchedCase && matchedCase.prototype ? matchedCase.prototype : 'Prototipo o evidencia clave por revisar según el banco de retos.';
+    }
+
     function renderStage1(){
       const tabsEl = document.getElementById('stage1SemesterTabs');
       const summaryEl = document.getElementById('stage1Summary');
       const bodyEl = document.getElementById('stage1TableBody');
       if(!tabsEl || !summaryEl || !bodyEl) return;
-      const dataset = buildSemesterDataByCategory(stage1Category);
-      if(stage1SemesterIndex >= dataset.length) stage1SemesterIndex = 0;
-      const currentSemester = dataset[stage1SemesterIndex];
-      tabsEl.innerHTML = dataset.map((item,index) => `<button class="semester-tab ${index === stage1SemesterIndex ? 'active' : ''}" data-stage1semester="${index}"><i class="fas fa-layer-group"></i>${item.semester}</button>`).join('');
+
+      const semesters = stage1Semesters(stage1Category);
+      if(!semesters.length){
+        tabsEl.innerHTML = '';
+        summaryEl.innerHTML = `
+          <article class="semester-summary-card"><strong>${stage1Category}</strong><span>Categoría activa del consolidado inicial.</span></article>
+          <article class="semester-summary-card"><strong>0</strong><span>No existen semestres cargados para esta categoría.</span></article>`;
+        bodyEl.innerHTML = `<tr><td colspan="6">No hay registros cargados para esta categoría.</td></tr>`;
+        return;
+      }
+
+      if(stage1SemesterIndex >= semesters.length) stage1SemesterIndex = 0;
+      const currentSemester = semesters[stage1SemesterIndex];
+      const categoryRows = stage1ExcelRegistry.filter(item => item.category === stage1Category);
+      const semesterRows = categoryRows.filter(item => item.semester === currentSemester);
+      const reviewRows = semesterRows.filter(item => item.members.length !== 5).length;
+
+      tabsEl.innerHTML = semesters.map((semester, index) => `<button class="semester-tab ${index === stage1SemesterIndex ? 'active' : ''}" data-stage1semester="${index}"><i class="fas fa-layer-group"></i>${semester}</button>`).join('');
+
       summaryEl.innerHTML = `
         <article class="semester-summary-card"><strong>${stage1Category}</strong><span>Categoría activa del consolidado inicial.</span></article>
-        <article class="semester-summary-card"><strong>${currentSemester.semester}</strong><span>Semestre activo para registro.</span></article>
-        <article class="semester-summary-card"><strong>${currentSemester.cases.length}</strong><span>Filas preparadas para carga posterior.</span></article>
-        <article class="semester-summary-card"><strong>${currentSemester.subjects.length}</strong><span>Asignaturas eje visibles en el bloque.</span></article>`;
-      bodyEl.innerHTML = currentSemester.cases.map((item, index) => `
+        <article class="semester-summary-card"><strong>${currentSemester}</strong><span>Semestre activo según el archivo cargado.</span></article>
+        <article class="semester-summary-card"><strong>${semesterRows.length}</strong><span>Grupos registrados en este semestre.</span></article>
+        <article class="semester-summary-card"><strong>${reviewRows}</strong><span>Registros que requieren revisión de completitud.</span></article>`;
+
+      bodyEl.innerHTML = semesterRows.map((item, index) => `
         <tr>
-          <td><span class="table-tag">${item.c}</span></td>
+          <td><span class="table-tag">${item.code}</span></td>
           <td>${stage1Category === 'Junior' ? 'Equipo Junior' : 'Equipo Senior'} ${String(index + 1).padStart(2,'0')}</td>
-          <td>${item.p}</td>
-          <td>${item.prototype}</td>
-          <td>Integrante 1, Integrante 2, Integrante 3, Integrante 4, Integrante 5</td>
-          <td>Pendiente de verificar si el registro del grupo fue completado correctamente.</td>
+          <td>${item.title}</td>
+          <td>${stage1Prototype(item)}</td>
+          <td>${item.members.join(', ')}</td>
+          <td>${stage1Observation(item)}</td>
         </tr>`).join('');
-      document.querySelectorAll('[data-stage1semester]').forEach(btn => btn.addEventListener('click', () => { stage1SemesterIndex = Number(btn.dataset.stage1semester); renderStage1(); }));
+
+      document.querySelectorAll('[data-stage1semester]').forEach(btn => btn.addEventListener('click', () => {
+        stage1SemesterIndex = Number(btn.dataset.stage1semester);
+        renderStage1();
+      }));
     }
+
     document.querySelectorAll('[data-stage1cat]').forEach(btn => btn.addEventListener('click', () => {
       document.querySelectorAll('[data-stage1cat]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -3673,34 +3729,154 @@
     }));
     renderStage1();
 
-    function buildEvaluationData(category){
-      const source = category === 'Junior' ? juniorCases : seniorCases;
-      return source.map(item => ({c:item.c, semester:item.semester, p:item.p}));
+    const stage2Results = {
+      Junior: [
+        {code:'J2-01', juror1:'Omar Alpala', juror2:'Byron Zurita', juror3:'Israel Herrera', score1:'87', score2:'77', score3:'51', average:'71,67', position:'10'},
+        {code:'J2-02', juror1:'Dayana Bolaños', juror2:'Eduardo Pozo', juror3:'Daniel Beltrán', score1:'80', score2:'', score3:'74', average:'77,00', position:'7'},
+        {code:'J2-03', juror1:'Jorge Chunes', juror2:'Juan Carlos López', juror3:'Dayana Villareal', score1:'43', score2:'77', score3:'80', average:'66,67', position:'14'},
+        {code:'J2-04', juror1:'Argenis Heredia', juror2:'Blanca Montenegro', juror3:'Artus Jose', score1:'48', score2:'33', score3:'73', average:'51,33', position:'17'},
+        {code:'J2-05', juror1:'Madelaine Obando', juror2:'Israel Herrera', juror3:'Byron Zurita', score1:'78', score2:'64', score3:'72', average:'71,33', position:'11'},
+        {code:'J2-06', juror1:'Omar Alpala', juror2:'Madelaine Obando', juror3:'Eduardo Pozo', score1:'80', score2:'95', score3:'', average:'87,50', position:'4'},
+        {code:'J2-07', juror1:'Artus Jose', juror2:'Blanca Montenegro', juror3:'Dayana Bolaños', score1:'89', score2:'37', score3:'34', average:'53,33', position:'16'},
+        {code:'J2-08', juror1:'Daniel Beltrán', juror2:'Argenis Heredia', juror3:'Juan Carlos López', score1:'0', score2:'0', score3:'0', average:'0', position:'18'},
+        {code:'J2-09', juror1:'Dayana Villareal', juror2:'Byron Zurita', juror3:'Israel Herrera', score1:'81', score2:'65', score3:'38', average:'61,33', position:'15'},
+        {code:'J2-10', juror1:'Juan Carlos López', juror2:'Blanca Montenegro', juror3:'Omar Alpala', score1:'89', score2:'70', score3:'79', average:'79,33', position:'5'},
+        {code:'J2-11', juror1:'Dayana Villareal', juror2:'Madelaine Obando', juror3:'Eduardo Pozo', score1:'84', score2:'53', score3:'', average:'68,5', position:'13'},
+        {code:'J3-01', juror1:'Argenis Heredia', juror2:'Daniel Beltrán', juror3:'Dayana Bolaños', score1:'54', score2:'81', score3:'73', average:'69,33', position:'12'},
+        {code:'J3-03', juror1:'Artus Jose', juror2:'Israel Herrera', juror3:'Byron Zurita', score1:'76', score2:'56', score3:'84', average:'72', position:'9'},
+        {code:'J3-04', juror1:'Oswaldo Aguilar', juror2:'Omar Alpala', juror3:'Argenis Heredia', score1:'99', score2:'85', score3:'43', average:'75,67', position:'8'},
+        {code:'J3-05', juror1:'Dayana Villareal', juror2:'Eduardo Pozo', juror3:'Juan Carlos López', score1:'93', score2:'', score3:'92', average:'92,5', position:'2'},
+        {code:'J4-02', juror1:'Blanca Montenegro', juror2:'Daniel Beltrán', juror3:'Dayana Bolaños', score1:'82', score2:'66', score3:'84', average:'77,33', position:'6'},
+        {code:'J4-03', juror1:'Madelaine Obando', juror2:'Artus Jose', juror3:'Israel Herrera', score1:'99', score2:'94', score3:'93', average:'95,33', position:'1'},
+        {code:'J4-05', juror1:'Omar Alpala', juror2:'Byron Zurita', juror3:'Juan Carlos López', score1:'86', score2:'88', score3:'94', average:'89,33', position:'3'}
+      ],
+      Senior: [
+        {code:'S5-01', juror1:'Artus Jose', juror2:'Daniel Beltrán', juror3:'Eduardo Pozo', score1:'91', score2:'97', score3:'94', average:'94', position:'1'},
+        {code:'S5-02', juror1:'Madelaine Obando', juror2:'Blanca Montenegro', juror3:'Dayana Bolaños', score1:'92', score2:'80', score3:'95', average:'89', position:'2'},
+        {code:'S5-03', juror1:'Dayana Villareal', juror2:'Argenis Heredia', juror3:'Byron Zurita', score1:'96', score2:'50', score3:'83', average:'76,33', position:'11'},
+        {code:'S5-04', juror1:'Jorge Chunes', juror2:'Israel Herrera', juror3:'Omar Alpala', score1:'77', score2:'75', score3:'95', average:'82,33', position:'7'},
+        {code:'S5-05', juror1:'Blanca Montenegro', juror2:'Artus Jose', juror3:'Dayana Villareal', score1:'66', score2:'64', score3:'98', average:'76', position:'12'},
+        {code:'S6-01', juror1:'Dayana Bolaños', juror2:'Daniel Beltrán', juror3:'Eduardo Pozo', score1:'91', score2:'64', score3:'', average:'77,5', position:'9'},
+        {code:'S6-03', juror1:'Madelaine Obando', juror2:'Argenis Heredia', juror3:'Juan Carlos López', score1:'87', score2:'71', score3:'91', average:'83', position:'6'},
+        {code:'S6-04', juror1:'Omar Alpala', juror2:'Byron Zurita', juror3:'Israel Herrera', score1:'95', score2:'77', score3:'58', average:'76,67', position:'10'},
+        {code:'S6-05', juror1:'Artus Jose', juror2:'Blanca Montenegro', juror3:'Dayana Bolaños', score1:'', score2:'64', score3:'72', average:'68', position:'14'},
+        {code:'S6-06', juror1:'Oswaldo Aguilar', juror2:'Daniel Beltrán', juror3:'Madelaine Obando', score1:'100', score2:'58', score3:'95', average:'84,33', position:'4'},
+        {code:'S7-02', juror1:'Juan Carlos López', juror2:'Eduardo Pozo', juror3:'Dayana Villareal', score1:'0', score2:'0', score3:'0', average:'0', position:'17'},
+        {code:'S7-04', juror1:'Argenis Heredia', juror2:'Byron Zurita', juror3:'Israel Herrera', score1:'64', score2:'69', score3:'65', average:'66', position:'15'},
+        {code:'S7-05', juror1:'Jorge Chunes', juror2:'Omar Alpala', juror3:'Argenis Heredia', score1:'67', score2:'93', score3:'78', average:'79,33', position:'8'},
+        {code:'S8-01', juror1:'Oswaldo Aguilar', juror2:'Dayana Bolaños', juror3:'Artus Jose', score1:'95', score2:'81', score3:'86', average:'87,33', position:'3'},
+        {code:'S8-02', juror1:'Blanca Montenegro', juror2:'Juan Carlos López', juror3:'Madelaine Obando', score1:'77', score2:'84', score3:'90', average:'83,67', position:'5'},
+        {code:'S8-03', juror1:'Daniel Beltrán', juror2:'Dayana Villareal', juror3:'Eduardo Pozo', score1:'61', score2:'83', score3:'72', average:'72', position:'13'},
+        {code:'S8-04', juror1:'Omar Alpala', juror2:'Byron Zurita', juror3:'Israel Herrera', score1:'70', score2:'67', score3:'35', average:'57,33', position:'16'}
+      ]
+    };
+
+    const stage2Finalists = {
+      Junior: [
+        {position:'1', code:'J4-03', title:'Trazabilidad de Inventarios Cárnicos y Optimización de Fletes Refrigerados con ERP y Analítica', score:'95,33'},
+        {position:'2', code:'J3-05', title:'Panificación Inteligente: Diseño de Línea, Producto y Base de Datos para una Producción Continua y Segura', score:'92,50'},
+        {position:'3', code:'J4-05', title:'Centro de Almacenamiento para Almidones y Licores con Control WMS, ERP y Visualización Ejecutiva', score:'89,33'},
+        {position:'4', code:'J2-06', title:'Tubérculo a Planta, Alcohol Seguro: abastecimiento agrícola y transporte controlado para almidones y licores', score:'87,50'},
+        {position:'5', code:'J2-10', title:'Obra sin Faltantes: abastecimiento y transporte escalonado para infraestructura productiva local', score:'79,33'},
+        {position:'6', code:'J4-02', title:'Rediseño de Almacenes y Reparto Urbano Eficiente para Panificación Regional', score:'77,33'},
+        {position:'7', code:'J2-02', title:'Frío Seguro para Embutidos: sistema básico de aprovisionamiento térmico y distribución primaria para transformadores cárnicos locales', score:'77,00'},
+        {position:'8', code:'J3-04', title:'Arquitectura de Datos y Rediseño Seguro de Estaciones para la Producción de Almidones y Licores', score:'75,67'},
+        {position:'9', code:'J3-03', title:'Gemelo Operativo para Vegetales de Cuarta Gama: Layout de Proceso, Modelado 3D y Base de Datos de Frescura y Lotes', score:'72,00'},
+        {position:'10', code:'J2-01', title:'Ruta Verde de la Leche: red de acopio inteligente y transporte colaborativo para pequeños productores del Carchi', score:'71,67'}
+      ],
+      Senior: [
+        {position:'1', code:'S5-01', title:'Optimización Multiobjetivo y Cumplimiento Legal de la Distribución Láctea en el Carchi', score:'94,00'},
+        {position:'2', code:'S5-02', title:'Análisis Estadístico de Mermas y Optimización de la Cadena de Suministro Cárnica Nacional', score:'89,00'},
+        {position:'3', code:'S8-01', title:'Exportación Láctea con Estándares de Calidad Global: diseño de una DFI inteligente y trazable para derivados lácteos del Carchi', score:'87,33'},
+        {position:'4', code:'S6-06', title:'Cadena de Frío Cárnica Bajo Incertidumbre: Optimización de rutas y riesgo logístico con evidencia inferencial', score:'84,33'},
+        {position:'5', code:'S8-02', title:'Logística Portuaria Reefer para Cárnicos de Alta Gama: control de calidad y administración de operaciones para exportación segura', score:'83,67'},
+        {position:'6', code:'S6-03', title:'Ventana Intermodal Hortofrutícola: diseño de red y consolidación transfronteriza para frutas y vegetales frescos', score:'83,00'},
+        {position:'7', code:'S5-04', title:'Modelado Logístico para la Distribución Física Internacional de Derivados de Almidones y Licores', score:'82,33'},
+        {position:'8', code:'S7-05', title:'Microhubs Urbanos Rentables: simulación XR y evaluación de proyectos de última milla para ciudades inteligentes', score:'79,33'},
+        {position:'9', code:'S6-01', title:'Corredor Intermodal Lácteo Inteligente: red probabilística y optimización de exportación desde el Carchi', score:'77,50'},
+        {position:'10', code:'S6-04', title:'Sincronía Papa–Puerto: planificación intermodal y logística colaborativa para almidones y licores', score:'76,67'}
+      ]
+    };
+
+    const finalistVideoMap = {
+      'J4-03':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/FleteLab_cuarto_AT_GABRIELA%20ESTEFANIA%20C.mp4',
+      'J3-05':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/LogiStars_tercero_A.mp4_KATHERYN%20MAYLIN%20CUMB.mp4',
+      'J4-05':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/LogicsMaster_4toAT_HEIDY%20NICOLE%20POZO%20PI.mp4',
+      'J2-06':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/Flow%20Masters_Segundo_B-T_ALISON%20RUBI%20TULCAN%20A.mp4',
+      'J2-10':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/VID-20260413-WA0031_NALLELY%20YOMAIRA%20BENA.mp4',
+      'J4-02':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/OptiChain_ERICK%20SEBASTIAN%20DUAR.mp4',
+      'J2-02':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/Iceskin_segundo%20AT_ARACELLY%20ELIZABETH%20S.mp4',
+      'J3-04':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/LOGIPULSE_3_A_KEVIN%20ALEXIS%20JARAMIL.mp4',
+      'J3-03':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/Video_MARCELO%20ANDR%C3%AF%C2%BF%C2%BDS%20CHALA.mp4',
+      'J2-01':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/videoplayback_ARIANA%20GISELL%20VALENZ.mp4',
+      'S5-01':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/Distribuci%C3%B3n%20L%C3%A1ctea%20en%20el%20Carchi_Quinto_AM_VANESSA%20SCARLETT%20ARC.mp4',
+      'S5-02':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/Control%20y%20Optimizaci%C3%B3n%20C%C3%A1rnica_5to_A_MARIORY%20LISBETH%20GARC.mp4',
+      'S8-01':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/LOGISTARS_8vo_AT_PABLO%20ALEXIS%20MARCILL.mp4',
+      'S6-06':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/Destino%20X_Sexto_AT_STEVEN%20ALEXANDER%20CUA.mp4',
+      'S8-02':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/FRESCOMAR_8_A_EDGAR%20ANDRES%20CARDENA.mp4',
+      'S6-03':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/LogiSmart%20Agro_Sexto_A_EVELYN%20VICTORIA%20JARA.mp4',
+      'S5-04':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/LogisticosDeDerivadosGlobales_quinto_A-M_MIGUEL%20ANGEL%20BARAJA.mp4',
+      'S7-05':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/MODERGIX_7mo_AM_FRANKLIN%20GIOVANNY%20PE.mp4',
+      'S6-01':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/EquipoLactiCore_Sexto_AT_MELANI%20JAJAIRA%20GUAMA.mp4',
+      'S6-04':'https://upecedu-my.sharepoint.com/personal/byron_zurita_upec_edu_ec/Documents/Aplicaciones/Microsoft%20Forms/Registro%20de%20Grupos%20-%20Expoferia%202026%20(2)/%F0%9F%93%8E%20Adjunta%20tu%20plantilla%20Excel%20completada%201/Log%C3%ADstica360_sexto_A_VICTOR%20MANUELLE%20ROBL.mp4'
+    };
+
+    function finalistsMembers(code){
+      const found = stage1ExcelRegistry.find(item => item.code === code);
+      return found ? found.members : [];
+    }
+
+    function scoreToNumber(value){
+      return Number(String(value).replace(',', '.')) || 0;
+    }
+
+    function hasVisibleStage2Score(value){
+      return value !== '' && value !== null && value !== undefined;
+    }
+
+    function formatStage2Jury(name, score){
+      return name || '—';
+    }
+
+    function formatStage2Score(score){
+      return hasVisibleStage2Score(score) ? score : '—';
     }
 
     let stage2Category = 'Junior';
     function renderStage2(){
       const summaryEl = document.getElementById('stage2Summary');
       const bodyEl = document.getElementById('stage2TableBody');
+      const noteEl = document.querySelector('#finalistas .table-note');
       if(!summaryEl || !bodyEl) return;
-      const data = buildEvaluationData(stage2Category);
+      const data = stage2Results[stage2Category] || [];
+      const finalists = stage2Finalists[stage2Category] || [];
+      const bestScore = finalists.length ? finalists[0].score : '0,00';
+      const zeroRows = data.filter(item => scoreToNumber(item.average) === 0).length;
+
       summaryEl.innerHTML = `
-        <article class="semester-summary-card"><strong>${stage2Category}</strong><span>Categoría activa de evaluación preliminar.</span></article>
-        <article class="semester-summary-card"><strong>${data.length}</strong><span>Filas preparadas para consolidado de evaluación.</span></article>
-        <article class="semester-summary-card"><strong>10</strong><span>Espacios previstos para finalistas.</span></article>
-        <article class="semester-summary-card"><strong>OneDrive</strong><span>Espacio reservado para visor de video.</span></article>`;
+        <article class="semester-summary-card"><strong>${stage2Category}</strong><span>Categoría activa del consolidado preliminar.</span></article>
+        <article class="semester-summary-card"><strong>${data.length}</strong><span>Retos evaluados en esta categoría.</span></article>
+        <article class="semester-summary-card"><strong>${finalists.length}</strong><span>Finalistas seleccionados para la etapa final.</span></article>
+        <article class="semester-summary-card"><strong>${bestScore}</strong><span>Mejor puntaje preliminar registrado.</span></article>`;
+
       bodyEl.innerHTML = data.map(item => `
         <tr>
-          <td><span class="table-tag">${item.c}</span></td>
-          <td>Por ingresar</td>
-          <td>${item.semester}</td>
-          <td>Por evaluar</td>
-          <td>Pendiente</td>
-          <td>Pendiente</td>
-          <td>Pendiente</td>
+          <td><span class="table-tag">${item.code}</span></td>
+          <td>${formatStage2Jury(item.juror1, item.score1)}</td>
+          <td>${formatStage2Jury(item.juror2, item.score2)}</td>
+          <td>${formatStage2Jury(item.juror3, item.score3)}</td>
+          <td>${formatStage2Score(item.score1)}</td>
+          <td>${formatStage2Score(item.score2)}</td>
+          <td>${formatStage2Score(item.score3)}</td>
+          <td><strong>${item.average}</strong></td>
+          <td>${item.position}</td>
         </tr>`).join('');
-      renderSelectedFinalists();
+
+      if(noteEl){
+        noteEl.textContent = `Consolidado preliminar de evaluación cargado por categoría. Esta vista presenta ${data.length} retos evaluados, ${finalists.length} finalistas seleccionados y ${zeroRows} registros con promedio final igual a 0.`;
+      }
     }
+
     document.querySelectorAll('[data-stage2cat]').forEach(btn => btn.addEventListener('click', () => {
       document.querySelectorAll('[data-stage2cat]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -3712,45 +3888,65 @@
     function renderSelectedFinalists(){
       const el = document.getElementById('selectedTeamsGrid');
       if(!el) return;
-      const label = selectedFinalistsCategory === 'Junior' ? 'Finalista Junior' : 'Finalista Senior';
-      el.innerHTML = Array.from({length:10}, (_,index) => `
+      const data = stage2Finalists[selectedFinalistsCategory] || [];
+      el.innerHTML = data.map(item => {
+        const members = finalistsMembers(item.code);
+        const videoUrl = finalistVideoMap[item.code] || '';
+        return `
         <article class="video-card">
-          <div class="video-card-top"><span class="table-tag">${label} ${String(index + 1).padStart(2,'0')}</span></div>
-          <h3>Equipo pendiente de publicación</h3>
-          <p><strong>Proyecto o caso pendiente de publicación</strong></p>
-          <div class="video-viewer-wrap" style="color:#fff;padding:1rem;text-align:center;">Espacio reservado para visor de video OneDrive</div>
-          <div class="team-members"><span class="member-chip"><i class="fas fa-user"></i>Integrantes por publicar</span></div>
-          <div class="video-action-row"><div class="video-buttons"><button class="mini-btn" disabled><i class="fas fa-link"></i>Agregar enlace después</button></div></div>
-        </article>`).join('');
+          <div class="video-card-top">
+            <div>
+              <span class="status-pill"><i class="fas fa-trophy"></i>Finalista ${selectedFinalistsCategory}</span>
+            </div>
+            <span class="score-pill"><i class="fas fa-ranking-star"></i>Posición ${item.position} · ${item.score}</span>
+          </div>
+          <h3>${item.code} · ${item.title}</h3>
+          <p>Video oficial del equipo finalista cargado para la etapa preliminar. Puede reproducirse directamente desde esta tarjeta cuando el enlace de OneDrive o SharePoint tenga permisos públicos o institucionales habilitados.</p>
+          <div class="video-viewer-wrap">
+            ${videoUrl ? `<video controls preload="metadata" playsinline src="${videoUrl}"></video>` : `<div style="padding:1.2rem;color:#cfd7de;text-align:center;line-height:1.7;">Video pendiente de vinculación.</div>`}
+          </div>
+          <div class="team-members">${members.length ? members.map(member => `<span class="member-chip"><i class="fas fa-user"></i>${member}</span>`).join('') : `<span class="member-chip"><i class="fas fa-users"></i>Integrantes por publicar</span>`}</div>
+          <div class="video-action-row">
+            <div class="video-buttons">
+              <button class="mini-btn" onclick="openChallengeByCode('${item.code}')"><i class="fas fa-circle-info"></i>Ver detalles del caso</button>
+              ${videoUrl ? `<a class="btn-soft" href="${videoUrl}" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i>Abrir video</a>` : ``}
+            </div>
+          </div>
+        </article>`;
+      }).join('');
     }
+
     document.querySelectorAll('[data-selectedcat]').forEach(btn => btn.addEventListener('click', () => {
       document.querySelectorAll('[data-selectedcat]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       selectedFinalistsCategory = btn.dataset.selectedcat;
       renderSelectedFinalists();
     }));
+
     renderStage2();
+    renderSelectedFinalists();
 
     let stage3Category = 'Junior';
-    function stage3RowCount(){ return stage3Category === 'Posters' ? 20 : 10; }
     function renderStage3(){
       const summaryEl = document.getElementById('stage3Summary');
       const bodyEl = document.getElementById('stage3TableBody');
       if(!summaryEl || !bodyEl) return;
-      const rows = stage3RowCount();
+      const data = stage2Finalists[stage3Category] || [];
+      const bestScore = data.length ? data[0].score : '0,00';
+      const lastScore = data.length ? data[data.length - 1].score : '0,00';
+
       summaryEl.innerHTML = `
-        <article class="semester-summary-card"><strong>${stage3Category}</strong><span>Categoría activa de evaluación final.</span></article>
-        <article class="semester-summary-card"><strong>${rows}</strong><span>Filas preparadas para puntaje final.</span></article>
-        <article class="semester-summary-card"><strong>Documento final</strong><span>Campo reservado para verificación de entrega.</span></article>
-        <article class="semester-summary-card"><strong>Defensa</strong><span>Espacio reservado para estado final.</span></article>`;
-      bodyEl.innerHTML = Array.from({length:rows}, (_,index) => `
+        <article class="semester-summary-card"><strong>${stage3Category}</strong><span>Categoría activa de la gran final.</span></article>
+        <article class="semester-summary-card"><strong>${data.length}</strong><span>Equipos clasificados para el 20 de abril.</span></article>
+        <article class="semester-summary-card"><strong>${bestScore}</strong><span>Mejor puntaje de clasificación registrado.</span></article>
+        <article class="semester-summary-card"><strong>${lastScore}</strong><span>Puntaje de cierre del Top 10 clasificado.</span></article>`;
+
+      bodyEl.innerHTML = data.map(item => `
         <tr>
-          <td><span class="table-tag">${stage3Category === 'Posters' ? 'P' : stage3Category === 'Junior' ? 'J' : 'S'}-${String(index + 1).padStart(2,'0')}</span></td>
-          <td>Por ingresar</td>
-          <td>Por evaluar</td>
-          <td>Pendiente</td>
-          <td>Pendiente</td>
-          <td>Pendiente</td>
+          <td>${item.position}</td>
+          <td><span class="table-tag">${item.code}</span></td>
+          <td>${item.title}</td>
+          <td><strong>${item.score}</strong></td>
         </tr>`).join('');
     }
     document.querySelectorAll('[data-stage3cat]').forEach(btn => btn.addEventListener('click', () => {
